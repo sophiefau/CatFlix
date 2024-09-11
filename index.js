@@ -1,5 +1,6 @@
 const express = require('express'),
-      morgan = require('morgan');
+      morgan = require('morgan'),
+      fs = require('fs');
 
 const app = express();
 
@@ -229,6 +230,17 @@ app.get('/', (req, res) => {
 // Errors-handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
+  // Log errors in log.txt
+  const logMessage = `URL: ${req.url}\nTimestamp: ${new Date()}\nError Stack: ${err.stack}\n\n`;
+  fs.appendFile('log.txt', logMessage, (err) => {
+   if (err) {
+     console.log('Failed to write to log:', err);
+   } else {
+     console.log('Error logged to log.txt');
+   }
+ });
+
   res.status(500).send('Something broke!');
 });
 
