@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Simple Cat Movies Application">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 
   <title>CatFlix Documentation</title>
@@ -13,13 +17,13 @@
 <body>
   <h1>CatFlix</h1>
   <p>
-    This project is a small movies web application, with a catalog of movies featuring cats. <br>
+    This project is a small web application, showcasing movies featuring cats. <br>
     The web application will provide users with access to information about different movies, directors, and genres.
     Users will be able to sign up, update their personal information, and create a list of their favorite movies.
   </p>
 
   <table>
-    <tr>
+    <tr class="headline">
       <td>Business Logic</td>
       <td>URL</td>
       <td>HTTP Method</td>
@@ -27,67 +31,102 @@
       <td>Response body data format</td>
     </tr>
     <tr>
-      <td>Return a list of all movies to the user</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Return a list of all movies.</td>
+      <td>/movies</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about all movies.</td>
     </tr>
     <tr>
-      <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user;</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Return data about a single movie by title.</td>
+      <td>/movies/:title</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about a single movie including title, description, genre, director, featured cats, image URL.
+        Example:<br />
+        <br />
+        Title: "The Aristocats"<br />
+        Director: "Wolfgang Reitherman"<br />
+        Genre: "Animation, Adventure, Comedy"<br />
+        Year: "1970"<br />
+        Cat: "Duchess (mother) and her kittens: Marie, Berlioz, and Toulouse."<br />
+        Synopsis: "A wealthy old woman plans to leave her fortune to her cats, but her butler tries to get rid of them. The cats must find their way back home with the help of a charming alley cat."
+        Image: "img/the-aristocats.jpg"
+      </td>
     </tr>
     <tr>
-      <td>Return data about a genre (description) by name/title (e.g., “Thriller”);</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Return data about a genre, such as genre description (e.g., “Thriller”).</td>
+      <td>/genres/:genre</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about then genres of the movie. Example:<br />
+        Genre: "Thriller"<br />
+        Description: "Thrillers are very thrilling."<br />
+      </td>
     </tr>
     <tr>
-      <td>Return data about the featured cat (name, color/breed, bio) by name;</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Return data about the featured cat (name, color/breed, bio) by name.
+      </td>
+      <td>/movies/cat/:catName</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about the featured cat-s including name, color/breed and bio. Example:<br />
+          Name:"Duchess (mother) and her kittens: Marie, Berlioz, and Toulouse."<br />
+          Color/Breed: "Duchess (white Persian), Marie (white Persian), Berlioz (gray kitten), Toulouse (orange kitten)."<br />
+          Bio: "Duchess is a refined, elegant mother cat who lives in Paris with her three kittens. Marie is sweet and ladylike, Berlioz is musically inclined, and Toulouse is artistic and adventurous."
+      </td>
     </tr>
     <tr>
-      <td>Allow new users to register</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Allow new users to register.</td>
+      <td>/users</td>
+      <td>POST</td>
+      <td>A JSON object holding data about a new user (username, email, password). Example:<br />
+          Username: "Sophie Fau",<br />
+          Email: "sophiefau@gmail.com",<br />
+          Password: "********"
+      </td>
+      <td>A JSON object holding data about the user that was added (username, email, password). Example:<br />
+          Username: "Sophie"<br />
+          Email: "sophie@gmail.com"<br />
+      </td>
     </tr>
     <tr>
-      <td>Allow users to update their user info (username)</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Allow users to update their user info (username).</td>
+      <td>/users/:username</td>
+      <td>PUT</td>
+      <td>A JSON object holding updated data about the username. Example:<br />
+          Username: "sophiefau"
+        </td>
+      <td>A confirmation message with updated user data or an error message. Example:<br />
+          Message: "Your username has been updated to: sophiefau"<br />
+          ErrorMessage: "An error occured, please try again"
+      </td>
     </tr>
     <tr>
-      <td>Allow users to add a movie to their list of favorites</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Allow users to add a movie to their list of favorites.</td>
+      <td>/users/:username/:movieTitle</td>
+      <td>PUT</td>
+      <td>A JSON object holding data about the favorite movie. Example:<br />
+          Title: "The Aristocats"<br />
+        </td>
+      <td>A confirmation or an error message. 
+      </td>
     </tr>
     <tr>
-      <td>Allow users to remove a movie from their list of favorites</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Allow users to remove a movie from their list of favorites.</td>
+      <td>/users/:username/:movieTitle</td>
+      <td>DELETE</td>
+      <td>A JSON object holding the title of the movie to be removed. Example:<br />
+          Title: "The Aristocats"
+      </td>
+      <td>A confirmation or an error message.</td>
     </tr>
     <tr>
-      <td>Allow existing users to deregister</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Allow existing users to deregister.</td>
+      <td>/users/:username</td>
+      <td>DELETE</td>
+      <td>None</td>
+      <td>A confirmation or an error message.</td>
     </tr>
   </table>
 

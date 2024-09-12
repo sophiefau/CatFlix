@@ -3,6 +3,23 @@
   padding: 0;
 }
 
-td{
-  border: 3px solid #007792;
+body {
+  font-family: "Catamaran", sans-serif;
+  font-size: 16px;
 }
+
+table { 
+  border-collapse: collapse; 
+}
+
+td{
+  border: 1px solid #959595;
+  padding: 10px;
+  margin-top: 0;
+}
+
+.headline td{
+  font-size: 18px;
+  font-weight: 700;
+}
+
