@@ -1,20 +1,15 @@
 const express = require('express');
-      morgan = require('morgan');
-      fs = require('fs');
-      bodyParser = require('body-parser');
-      uuid = require('uuid');
-      app = express();
-      mongoose = require('mongoose');
-      Models = require('./models.js');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+const morgan = require('morgan');
 
 // Import data from model.js
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/CatFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const app = express();
 
-// Serve the “documentation.html” file from the public folder
-app.use(express.static('public'));
+mongoose.connect('mongodb://localhost:27017/CatFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Parse incoming request (POST)
 app.use(morgan('common'));
@@ -54,7 +49,7 @@ app.get('/movies/:title', async (req, res) => {
 });
 
 // READ Get a Genre by name OK
-app.get('/movies/:name', (req, res) => {
+app.get('/genres/:Name', async (req, res) => {
   await Movies.findOne({ 'Genre.Name': req.params.Name })
   .then((genre) => {
       if (genre) {
@@ -72,7 +67,7 @@ app.get('/movies/:name', (req, res) => {
 );
 
 
-// READ Get a cat by name
+// READ Get a cat by name OK
 app.get('/movies/cat/:name', async (req, res) => {
   await Movies.findOne({ 'Cat.Name': req.params.Cat.Name })
   .then((cat) => {
@@ -145,7 +140,7 @@ app.post('/users', async (req, res) => {
     });
 });
 
-// UPDATE Allow users to update their user info (username) OK
+// UPDATE Allow users to update their user info (username, password, email, date of birth) OK
 app.put('/users/:Username', async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -161,7 +156,7 @@ app.put('/users/:Username', async (req, res) => {
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send(‘Error: ’ + err);
+    res.status(500).send('Error: ' + err);
   })
 });
 
@@ -177,13 +172,13 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send(‘Error: ’ + err);
+    res.status(500).send('Error: ' + err);
   });
 });
 
 
 // DELETE Allow users to remove a movie from their favorites OK
-app.delete('/users/:username/:movieTitle', (req, res) => {
+app.delete('/users/:username/:movieTitle',  async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
@@ -193,7 +188,7 @@ app.delete('/users/:username/:movieTitle', (req, res) => {
  })
  .catch((err) => {
    console.error(err);
-   res.status(500).send(‘Error: ’ + err);
+   res.status(500).send('Error: ' + err);
  });
 });
 
