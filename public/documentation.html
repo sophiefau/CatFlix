@@ -56,7 +56,7 @@
     </tr>
     <tr>
       <td>Return data about a genre, such as genre description (e.g., “Thriller”).</td>
-      <td>/genres/:genre</td>
+      <td>/movies/:name</td>
       <td>GET</td>
       <td>None</td>
       <td>A JSON object holding data about then genres of the movie. Example:<br />
@@ -67,7 +67,7 @@
     <tr>
       <td>Return data about the featured cat (name, color/breed, bio) by name.
       </td>
-      <td>/movies/cat/:catName</td>
+      <td>/movies/cat/:name</td>
       <td>GET</td>
       <td>None</td>
       <td>A JSON object holding data about the featured cat-s including name, color/breed and bio. Example:<br />
@@ -90,11 +90,14 @@
       </td>
     </tr>
     <tr>
-      <td>Allow users to update their user info (username).</td>
+      <td>Allow users to update their user info (username, password, email, date of birth).</td>
       <td>/users/:username</td>
       <td>PUT</td>
       <td>A JSON object holding updated data about the username. Example:<br />
-          Username: "sophiefau"
+          Username: 'Sophie',
+          email: 'sophiefauquembergue@gmail.com',
+          password: 'test1',
+          Birthday: ISODate('1988-08-08T00:00:00.000Z'),
         </td>
       <td>A confirmation message with updated user data or an error message. Example:<br />
           Message: "Your username has been updated to: sophiefau"<br />
@@ -105,8 +108,8 @@
       <td>Allow users to add a movie to their list of favorites.</td>
       <td>/users/:username/:movieTitle</td>
       <td>PUT</td>
-      <td>A JSON object holding data about the favorite movie. Example:<br />
-          Title: "The Aristocats"<br />
+      <td>A JSON object holding an array about their favorite movies. Example:<br />
+          Title: "The Aristocats", "A Street Cat named Bob<br />
         </td>
       <td>A confirmation or an error message. 
       </td>
