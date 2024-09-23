@@ -56,7 +56,7 @@
     </tr>
     <tr>
       <td>Return data about a genre, such as genre description (e.g., “Thriller”).</td>
-      <td>/movies/:name</td>
+      <td>/genres/:Name</td>
       <td>GET</td>
       <td>None</td>
       <td>A JSON object holding data about then genres of the movie. Example:<br />
@@ -67,11 +67,11 @@
     <tr>
       <td>Return data about the featured cat (name, color/breed, bio) by name.
       </td>
-      <td>/movies/cat/:name</td>
+      <td>/cats/:Name</td>
       <td>GET</td>
       <td>None</td>
       <td>A JSON object holding data about the featured cat-s including name, color/breed and bio. Example:<br />
-          Name:"Duchess (mother) and her kittens: Marie, Berlioz, and Toulouse."<br />
+          Name:"Duchess"<br />
           Color/Breed: "Duchess (white Persian), Marie (white Persian), Berlioz (gray kitten), Toulouse (orange kitten)."<br />
           Bio: "Duchess is a refined, elegant mother cat who lives in Paris with her three kittens. Marie is sweet and ladylike, Berlioz is musically inclined, and Toulouse is artistic and adventurous."
       </td>
@@ -91,7 +91,7 @@
     </tr>
     <tr>
       <td>Allow users to update their user info (username, password, email, date of birth).</td>
-      <td>/users/:username</td>
+      <td>/users/:Username</td>
       <td>PUT</td>
       <td>A JSON object holding updated data about the username. Example:<br />
           Username: 'Sophie',
@@ -106,7 +106,7 @@
     </tr>
     <tr>
       <td>Allow users to add a movie to their list of favorites.</td>
-      <td>/users/:username/:movieTitle</td>
+      <td>/users/:username/favorites/:movieID</td>
       <td>PUT</td>
       <td>A JSON object holding an array about their favorite movies. Example:<br />
           Title: "The Aristocats", "A Street Cat named Bob<br />
@@ -116,7 +116,7 @@
     </tr>
     <tr>
       <td>Allow users to remove a movie from their list of favorites.</td>
-      <td>/users/:username/:movieTitle</td>
+      <td>/users/:username/favorites/:movieID</td>
       <td>DELETE</td>
       <td>A JSON object holding the title of the movie to be removed. Example:<br />
           Title: "The Aristocats"
@@ -125,7 +125,7 @@
     </tr>
     <tr>
       <td>Allow existing users to deregister.</td>
-      <td>/users/:username</td>
+      <td>/users/:Username</td>
       <td>DELETE</td>
       <td>None</td>
       <td>A confirmation or an error message.</td>
