@@ -2,13 +2,18 @@ const express = require("express"),
       mongoose = require("mongoose"),
       morgan = require("morgan"),
       Models = require("./models.js"),
-      fs = require('fs');
+      fs = require('fs'),
+      cors = require('cors'),
+      bcrypt = require('bcrypt'),
+      auth = require('./auth')(app),
+      passport = require('passport'),
+      { check, validationResult } = require('express-validator');
+
+const app = express();
 
 // Import data from model.js
 const Movies = Models.Movie,
       Users = Models.User;
-
-const app = express();
 
 mongoose.connect("mongodb://localhost:27017/CatFlixDB", {
   useNewUrlParser: true,
@@ -20,12 +25,7 @@ app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Import auth.js and passport.js
-let auth = require('./auth')(app);
-
-const passport = require('passport');
-require('./passport');
+app.use(cors());
 
 // READ
 app.get("/", (req, res) => {
@@ -107,7 +107,21 @@ app.get("/cats/:Name", passport.authenticate('jwt', { session: false }), async (
 });
 
 // CREATE Allow new users to register
-app.post("/users", async (req, res) => {
+app.post("/users", 
+  [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+],
+  async (req, res) => {
+    // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+  let hashedPassword = Users.hashPassword(req.body.Password);
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -115,14 +129,12 @@ app.post("/users", async (req, res) => {
       } else {
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         })
           .then((user) => {
-            res
-              .status(201)
-              .json({ Username: user.Username, Email: user.Email });
+            res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
           })
           .catch((error) => {
             console.error(error);
@@ -167,10 +179,19 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), as
 });
 
 // UPDATE Allow users to update their user info (username, password, email, date of birth)
-app.put("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  if(req.user.Username !== req.params.Username){
-    return res.status(400).send('Permission denied');
-  }
+app.put("/users/:Username", 
+  [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
       $set: {
         Username: req.body.Username,
@@ -181,9 +202,11 @@ app.put("/users/:Username", passport.authenticate('jwt', { session: false }), as
     },
     { new: true }) // This line makes sure that the updated document is returned
     .then((updatedUser) => {
-      res
-        .status(201)
-        .json({ Username: updatedUser.Username, Email: updatedUser.Email });
+      res.status(200).json({ 
+        Username: updatedUser.Username, 
+        Email: updatedUser.Email, 
+        Birthday: updatedUser.Birthday 
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -281,6 +304,7 @@ app.use((err, req, res, next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log("Your app is listening on port 8080.");
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
