@@ -5,13 +5,11 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 const fs = require('fs');
-const cors = require('cors');
 const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 
 const app = express();
 
-// mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
   mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -27,7 +25,25 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
+
+
+
+// Allow origins
+const cors = require('cors');
 app.use(cors());
+
+let allowedOrigins = ['http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Authentification
 let auth = require('./auth')(app);
@@ -46,7 +62,7 @@ app.get("/", (req, res) => {
 app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
     .then((movies) => {
-      res.json(movies);
+      res.status(200).json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -180,7 +196,7 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), as
   }
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
-      res.json(user);
+      res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
     })
     .catch((err) => {
       console.error(err);
