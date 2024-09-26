@@ -39,9 +39,9 @@ userSchema.methods.validatePassword = function(password) {
 const Movie = model("Movie", movieSchema);
 const User = model("User", userSchema);
 
-module.exports = { Movie };
-module.exports = { User };
-// const _Movie = Movie;
-// export { _Movie as Movie };
-// const _User = User;
-// export { _User as User };
+// module.exports = { Movie };
+// module.exports = { User };
+const _Movie = Movie;
+export { _Movie as Movie };
+const _User = User;
+export { _User as User };
