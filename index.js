@@ -5,11 +5,12 @@ const express = require("express"),
       fs = require('fs'),
       cors = require('cors'),
       bcrypt = require('bcrypt'),
-      auth = require('./auth')(app),
       passport = require('passport'),
       { check, validationResult } = require('express-validator');
 
 const app = express();
+
+const auth = require('./auth')(app);
 
 // Import data from model.js
 const Movies = Models.Movie,
