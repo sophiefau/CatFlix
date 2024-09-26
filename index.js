@@ -1,46 +1,32 @@
-const express = require("express"),
-      mongoose = require("mongoose"),
-      morgan = require("morgan"),
-      Models = require("./models.js"),
-      fs = require('fs'),
-      cors = require('cors'),
-      bcrypt = require('bcrypt'),
-      passport = require('passport'),
-      { check, validationResult } = require('express-validator');
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const Models = require("./models.js");
+const Movies = Models.Movie;
+const Users = Models.User;
+const fs = require('fs');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const { check, validationResult } = require('express-validator');
 
 const app = express();
 
 const auth = require('./auth')(app);
 
-// Import data from model.js
-const Movies = Models.Movie,
-      Users = Models.User;
+console.log("MongoDB URI:", process.env.CONNECTION_URI);
 
-// mongoose.connect("mongodb://localhost:27017/CatFlixDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-mongoose.connect( process.env.CONNECTION_URI, {
+// mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
+  mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully!");
+  })
+  .catch(err => {
+    console.error("MongoDB connection error:", err);
 });
-
-// Update Director field (convert array to string)
-Movie.updateMany(
-  { Director: { $type: "array" } },
-  { $set: { Director: { $arrayElemAt: ["$Director", 0] } } }
-)
-.then(res => console.log('Updated Directors:', res))
-.catch(err => console.log('Error updating directors:', err));
-
-// Update Year field (convert array to string)
-Movie.updateMany(
-  { Year: { $type: "array" } },
-  { $set: { Year: { $arrayElemAt: ["$Year", 0] } } }
-)
-.then(res => console.log('Updated Years:', res))
-.catch(err => console.log('Error updating years:', err));
 
 // Close the connection after updates
 mongoose.connection.close();
