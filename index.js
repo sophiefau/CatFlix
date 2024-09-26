@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to CatFlix, an app showcasing movies featurings cats!");
 });
 
-// READ Return a list of all movies
+// READ Return all movies' list
 app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
     .then((movies) => {
@@ -69,7 +69,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
   });
 });
 
-// READ Get a Genre by name
+// READ Get genre by name
 app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Genre.Name": req.params.Name })
     .then((genre) => {
@@ -112,7 +112,7 @@ app.get("/cats/:Name", passport.authenticate('jwt', { session: false }), async (
     });
 });
 
-// CREATE Allow new users to register
+// CREATE new users
 app.post("/users", 
   [
   check('Username', 'Username is required').isLength({min: 5}),
@@ -121,13 +121,13 @@ app.post("/users",
   check('Email', 'Email does not appear to be valid').isEmail()
 ],
   async (req, res) => {
-    // check the validation object for errors
-    let errors = validationResult(req);
 
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  let hashedPassword = Users.hashPassword(req.body.Password);
+
+  let hashedPassword = await Users.hashPassword(req.body.Password);
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -220,7 +220,7 @@ app.put("/users/:Username",
     })
 });
 
-// POST Allow users to add a movie to their favorites
+// POST add a movie to favorites
 app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
@@ -241,7 +241,7 @@ app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { s
     });
 });
 
-// DELETE Allow users to remove a movie from their favorites
+// DELETE remove a movie from favorites
 app.delete("/users/:Username/favorites/:movieID",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');

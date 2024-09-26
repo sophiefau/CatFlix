@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-let movieSchema = new Schema({
+let movieSchema = Schema({
   Title: { type: String, required: true },
   ImgPath: String,
   Director: String,
@@ -18,7 +18,7 @@ let movieSchema = new Schema({
   Synopsis: { type: String, required: true },
 });
 
-let userSchema = new Schema({
+let userSchema = Schema({
   Username: { type: String, required: true, unique: true },
   Email: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
