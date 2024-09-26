@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt"); 
 
 let movieSchema = new Schema({
   Title: { type: String, required: true },
