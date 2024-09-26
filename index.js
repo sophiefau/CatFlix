@@ -11,8 +11,8 @@ const { check, validationResult } = require('express-validator');
 
 const app = express();
 
-mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
-  // mongoose.connect( process.env.CONNECTION_URI, {
+// mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
+  mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   })
