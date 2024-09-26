@@ -7,12 +7,9 @@ const Users = Models.User;
 const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 
 const app = express();
-
-const auth = require('./auth')(app);
 
 // mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
   mongoose.connect( process.env.CONNECTION_URI, {
@@ -27,11 +24,16 @@ const auth = require('./auth')(app);
 });
 
 // Parse incoming request (POST)
-app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("common"));
 app.use(cors());
+
+// Authentification
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 // READ
 app.get("/", (req, res) => {
