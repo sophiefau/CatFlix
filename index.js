@@ -14,8 +14,6 @@ const app = express();
 
 const auth = require('./auth')(app);
 
-console.log("MongoDB URI:", process.env.CONNECTION_URI);
-
 // mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
   mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -133,7 +131,7 @@ app.post("/users",
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
+        return res.status(400).send(req.body.Username + " already exists");
       } else {
         Users.create({
           Username: req.body.Username,
@@ -287,9 +285,6 @@ app.delete("/users/:Username",  passport.authenticate('jwt', { session: false })
       res.status(500).send("Error: " + err);
     });
 });
-
-// Morgan request to log requests into the terminal
-app.use(morgan("common"));
 
 // Log errors in log.txt
 app.use((req, res, next) => {
