@@ -23,17 +23,19 @@ const app = express();
     console.error("MongoDB connection error:", err);
 });
 
+// Parse incoming request (POST)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("common"));
+app.use(cors());
+
 // Authentification
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-// Parse incoming request (POST)
+//GET documentation file
 app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("common"));
-app.use(cors());
 
 // READ
 app.get("/", (req, res) => {
