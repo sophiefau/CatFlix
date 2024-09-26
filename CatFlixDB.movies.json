@@ -1,0 +1,522 @@
+[{
+  "_id": 1,
+  "Title": "A Street Cat Named Bob",
+  "Img": "/img/a_street_cat_named_bob.jpg",
+  "Director": "Roger Spottiswoode",
+  "Cat": {
+    "Name": "Bob The Cat",
+    "ColorBreed": "Ginger tabby",
+    "Bio": "Bob is a real-life stray cat who becomes the companion of a homeless man struggling with addiction. Their story is based on true events and shows how Bob helps his owner turn his life around."
+  },
+  "Genre": {
+    "Name": "Biography",
+    "Description": "A biography movie dramatizes the lives of real people, focusing on their achievements, struggles, and personal stories."
+  },
+  "Animation": false,
+  "Year": "2016",
+  "Synopsis": "Based on a true story, the film follows a homeless man struggling with addiction who befriends a stray cat, Bob, and finds a new purpose in life."
+},
+{
+  "_id": 2,
+  "Title": "Alice in Wonderland",
+  "Img": "/img/alice_in_wonderland.jpg",
+  "Director": "Clyde Geronimi, Wilfred Jackson, Hamilton Luske",
+  "Cat": {
+    "Name": "Cheshire Cat",
+    "ColorBreed": "Purple stripes, can be invisible",
+    "Bio": "The Cheshire Cat is known for his mischievous grin and ability to disappear and reappear at will, adding to the surreal atmosphere of Wonderland."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": true,
+  "Year": "1951",
+  "Synopsis": "In this classic Disney adaptation of Lewis Carroll's story, Alice follows the White Rabbit into Wonderland, where she encounters the mischievous Cheshire Cat, known for his wide grin and disappearing acts."
+},
+{
+  "_id": 3,
+  "Title": "An American Tail",
+  "Img": "/img/an_american_tail.jpg",
+  "Director": "Don Bluth",
+  "Cat": {
+    "Name": "Tiger",
+    "ColorBreed": "Large orange tabby cat",
+    "Bio": "Tiger is a kind-hearted, vegetarian cat who befriends Fievel. He provides comic relief and contrasts with the villainous cats."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": true,
+  "Year": "1986",
+  "Synopsis": "A young mouse named Fievel embarks on a journey to America, facing the dangers posed by cats along the way as he tries to reunite with his family."
+},
+{
+  "_id": 4,
+  "Title": "Cats",
+  "Img": "/img/cats.jpg",
+  "Director": "Tom Hooper",
+  "Cat": {
+    "Name": "Rum Tum Tugger, Mr. Mistoffelees, Grizabella",
+    "ColorBreed": "Varies, the cats are anthropomorphized in the film.",
+    "Bio": "Based on the famous musical, Cats features a tribe of cats called the Jellicles, who gather for an annual event where they decide which cat will ascend to the Heaviside Layer and be reborn."
+  },
+  "Genre": {
+    "Name": "Musical",
+    "Description": "Musical incorporates song and dance routines as a major element of the storytelling, often featuring elaborate performances."
+  },
+  "Animation": false,
+  "Year": "2019",
+  "Synopsis": "Based on the famous musical, this film follows a tribe of cats called the Jellicles as they make a decision about which one will ascend to the Heaviside Layer."
+},
+{
+  "_id": 5,
+  "Title": "Cats Don't Dance",
+  "Img": "/img/cats_dont_dance.jpg",
+  "Director": "Mark Dindal",
+  "Cat": {
+    "Name": "Danny",
+    "ColorBreed": "Domestic shorthair, white with orange spots",
+    "Bio": "Danny is a small-town cat with big dreams of becoming a star in Hollywood. He faces various challenges but remains determined to achieve his dream."
+  },
+  "Genre": {
+    "Name": "Comedy",
+    "Description": "Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect."
+  },
+  "Animation": true,
+  "Year": "1997",
+  "Synopsis": "A small-town cat with big dreams moves to Hollywood, where he discovers that only humans get leading roles in movies, but he refuses to give up on his dream."
+},
+{
+  "_id": 6,
+  "Title": "Coraline",
+  "Img": "/img/coraline.jpg",
+  "Director": "Henry Selick",
+  "Cat": {
+    "Name": "The Black Cat",
+    "ColorBreed": "Black",
+    "Bio": "A mysterious black cat that helps Coraline navigate a parallel world and warns her of its dangers."
+  },
+  "Genre": {
+    "Name": "Fantasy",
+    "Description": "The story is set in imaginary worlds with magical or supernatural elements, often featuring mythical creatures and fantastical adventures."
+  },
+  "Animation": true,
+  "Year": "2009",
+  "Synopsis": "A young girl discovers a parallel world where everything seems perfect, but she soon realizes there's a dark side to it. A mysterious black cat helps her navigate the dangers."
+},
+{
+  "_id": 7,
+  "Title": "Felidae",
+  "Img": "/img/felidae.jpg",
+  "Director": "Michael Schaack",
+  "Cat": {
+    "Name": "Francis",
+    "ColorBreed": "Domestic gray shorthair",
+    "Bio": "Francis is a domestic cat who becomes involved in a series of grisly murders in his neighborhood, leading him into a dark and disturbing mystery."
+  },
+  "Genre": {
+    "Name": "Crime",
+    "Description": "Crime movies revolve around criminal activities, including investigations, heists, and the consequences of breaking the law."
+  },
+  "Animation": true,
+  "Year": "1994",
+  "Synopsis": "In this dark animated thriller, a domestic cat named Francis uncovers a series of grisly murders in his neighborhood, leading him into a disturbing mystery."
+},
+{
+  "_id": 8,
+  "Title": "Gay Purr-ee",
+  "Img": "/img/gay_purr-ee.jpg",
+  "Director": "Abe Levitow",
+  "Cat": {
+    "Name": "Mewsette",
+    "ColorBreed": "White Persian",
+    "Bio": "Mewsette is a country cat who travels to Paris, where she becomes involved in the city’s glamour and learns the value of home and true love."
+  },
+  "Genre": {
+    "Name": "Comedy",
+    "Description": "Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect."
+  },
+  "Animation": true,
+  "Year": "1962",
+  "Synopsis": "A country cat named Mewsette travels to Paris, where she gets caught up in the city's glamour but eventually learns the value of home and true love."
+},
+{
+  "_id": 9,
+  "Title": "Harry and Tonto",
+  "Img": "/img/harry_and_tonto.jpg",
+  "Director": "Paul Mazursky",
+  "Cat": {
+    "Name": "Tonto",
+    "ColorBreed": "orange tabby",
+    "Bio": "Tonto is an elderly cat who accompanies his owner on a cross-country road trip, offering companionship and adding to the story’s charm."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": false,
+  "Year": "1974",
+  "Synopsis": "An elderly man and his cat, Tonto, embark on a cross-country trip after they are evicted from their New York apartment, encountering various adventures along the way."
+},
+{
+  "_id": 10,
+  "Title": "Homeward Bound: The Incredible Journey",
+  "Img": "/img/homeward_bound.jpg",
+  "Director": "Duwayne Dunham",
+  "Cat": {
+    "Name": "Sassy",
+    "ColorBreed": "Himalayan",
+    "Bio": "Sassy is a sassy and pampered Himalayan cat who, along with two dogs, embarks on a journey across the American wilderness to find her family."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": false,
+  "Year": "1993",
+  "Synopsis": "Three pets, including a sassy Himalayan cat named Sassy, embark on a dangerous journey across the American wilderness to find their owners."
+},
+{
+  "_id": 11,
+  "Title": "Inside Llewyn Davis",
+  "Img": "/img/inside_llewyn_davis.jpg",
+  "Director": "Joel Coen, Ethan Coen",
+  "Cat": {
+    "Name": "Ulysses",
+    "ColorBreed": "Ginger tabby",
+    "Bio": "Ulysses is a ginger cat who plays a symbolic role in the story of a struggling folk musician in 1960s New York."
+  },
+  "Genre": {
+    "Name": "Drama",
+    "Description": "Drama movies explore serious and emotional themes, often involving complex characters and intricate plots."
+  },
+  "Animation": false,
+  "Year": "2013",
+  "Synopsis": "This Coen Brothers film follows a struggling folk musician in 1960s New York, who ends up caring for a ginger cat that plays a symbolic role in his journey."
+},
+{
+  "_id": 12,
+  "Title": "Keanu",
+  "Img": "/img/keanu.jpg",
+  "Director": "Peter Atencio",
+  "Cat": {
+    "Name": "Keanu",
+    "ColorBreed": "Gray tabby",
+    "Bio": "Keanu is a kitten that two friends attempt to rescue from a street gang. The kitten becomes central to their adventure as they pose as gang members to retrieve him."
+  },
+  "Genre": {
+    "Name": "Action",
+    "Description": "Action movies are characterized by fast-paced sequences, including physical stunts, fight scenes, and high-energy sequences."
+  },
+  "Animation": false,
+  "Year": "2016",
+  "Synopsis": "Two friends pose as dangerous criminals to infiltrate a street gang and retrieve their stolen kitten, Keanu, who has been taken by a gangster."
+},
+{
+  "_id": 13,
+  "Title": "Kedi",
+  "Img": "/img/kedi.jpg",
+  "Director": "Ceyda Torun",
+  "Cat": {
+    "Name": "Various street cats in Istanbul (e.g., Sari, Duman, Bengü).",
+    "ColorBreed": "Various breeds, primarily domestic short-haired.",
+    "Bio": "Kedi is a documentary that follows several street cats in Istanbul, exploring their daily lives, interactions with humans, and the unique bond between the city and its feline residents."
+  },
+  "Genre": {
+    "Name": "Documentary",
+    "Description": "Documentary present factual information or real-life events, often aiming to educate or inform the audience about a particular subject."
+  },
+  "Animation": false,
+  "Year": "2016",
+  "Synopsis": "A documentary that explores the lives of the street cats of Istanbul, and their unique relationship with the city's residents."
+},
+{
+  "_id": 14,
+  "Title": "Nine Lives",
+  "Img": "/img/nine_live.jpg",
+  "Director": "Barry Sonnenfeld",
+  "Cat": {
+    "Name": "Tom Brand",
+    "ColorBreed": "Gray tabby",
+    "Bio": "Tom Brand is a successful businessman who, after a freak accident, finds himself trapped in the body of a cat. He learns valuable life lessons while navigating his new feline existence."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike."
+  },
+  "Animation": false,
+  "Year": "2016",
+  "Synopsis": "A workaholic businessman finds himself trapped inside the body of his family's cat and learns valuable life lessons in the process."
+},
+{
+  "_id": 15,
+  "Title": "Oliver & Company",
+  "Img": "/img/oliver_and_company.jpg",
+  "Director": "George Scribner",
+  "Cat": {
+    "Name": "Oliver",
+    "ColorBreed": "Orange tabby",
+    "Bio": "Oliver is a young, adventurous kitten who joins a gang of dogs in New York City. He embarks on an adventure and forms a bond with his new friends."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": true,
+  "Year": "1988",
+  "Synopsis": "A homeless kitten named Oliver joins a gang of dogs to survive in New York City, and they embark on an adventure to rescue a girl from a wealthy but dangerous man."
+},
+{
+  "_id": 16,
+  "Title": "Paws of Fury: The Legend of Hank",
+  "Img": "/img/paws_of_furry.jpg",
+  "Director": "Rob Minkoff, Mark Koetsier",
+  "Cat": {
+    "Name": "Hank",
+    "ColorBreed": "Gray tabby",
+    "Bio": "Hank is a clumsy and well-meaning dog who is mistaken for a cat and trained to become a samurai in order to defend a village from a villain."
+  },
+  "Genre": {
+    "Name": "Action",
+    "Description": "Action movies are characterized by fast-paced sequences, including physical stunts, fight scenes, and high-energy sequences."
+  },
+  "Animation": true,
+  "Year": "2022",
+  "Synopsis": "Hank, a dog who aspires to be a hero, is mistakenly trained as a samurai cat to save a village from an evil villain. He learns about courage and heroism along the way."
+},
+{
+  "_id": 17,
+  "Title": "Pet Sematary",
+  "Img": "/img/pet_sematary.jpg",
+  "Director": "Mary Lambert",
+  "Cat": {
+    "Name": "Church",
+    "ColorBreed": "Gray tabby",
+    "Bio": "Church is a sinister cat who is resurrected from the dead with terrifying consequences for the family who buried him in a mysterious cemetery."
+  },
+  "Genre": {
+    "Name": "Horror",
+    "Description": "Horror movies are designed to scare and unsettle, often featuring supernatural elements, monsters, or psychological terror."
+  },
+  "Animation": false,
+  "Year": "1989",
+  "Synopsis": "Based on Stephen King’s novel, this horror film features a sinister cat named Church who is resurrected from the dead, with terrifying consequences for the family who buried him in a mysterious cemetery."
+},
+{
+  "_id": 18,
+  "Title": "Puss in Boots",
+  "Img": "/img/puss_in_boots.jpg",
+  "Director": "Chris Miller",
+  "Cat": {
+    "Name": "Puss in Boots",
+    "ColorBreed": "Orange tabby, likely modeled after a domestic shorthair.",
+    "Bio": "Puss in Boots is a suave, adventurous, and skilled feline swordsman known for his charming demeanor and iconic boots and hat. He originally appeared in Shrek 2 before starring in his own film."
+  },
+  "Genre": {
+    "Name": "Fantasy",
+    "Description": "The story is set in imaginary worlds with magical or supernatural elements, often featuring mythical creatures and fantastical adventures."
+  },
+  "Animation": true,
+  "Year": "2011",
+  "Synopsis": "The swashbuckling cat, Puss in Boots, embarks on a quest to find the legendary magic beans and restore his honor."
+},
+{
+  "_id": 19,
+  "Title": "Soul",
+  "Img": "/img/soul.jpg",
+  "Director": "Pete Docter, Kemp Powers",
+  "Cat": {
+    "Name": "Mr. Mittens",
+    "ColorBreed": "Calico",
+    "Bio": "Mr. Mittens is a chubby, friendly cat who briefly hosts Joe Gardner's soul."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike."
+  },
+  "Animation": true,
+  "Year": "2020",
+  "Synopsis": "A middle-school music teacher with dreams of becoming a jazz musician finds himself in a fantastical world where souls are born. Along the way, he meets a cat named Mr. Mittens, who plays a key role in his journey of self-discovery."
+},
+{
+  "_id": 20,
+  "Title": "Shrek 2",
+  "Img": "/img/shrek2.jpg",
+  "Director": "Andrew Adamson, Kelly Asbury, Conrad Vernon",
+  "Cat": {
+    "Name": "Puss in Boots",
+    "ColorBreed": "Orange tabby",
+    "Bio": "Puss in Boots is a suave, adventurous, and skilled feline swordsman known for his charming demeanor and iconic boots and hat. He originally appeared in Shrek 2 before starring in his own film."
+  },
+  "Genre": {
+    "Name": "Fantasy",
+    "Description": "The story is set in imaginary worlds with magical or supernatural elements, often featuring mythical creatures and fantastical adventures."
+  },
+  "Animation": true,
+  "Year": "2004",
+  "Synopsis": "The sequel to Shrek introduces Puss in Boots, a suave and skilled feline warrior who eventually becomes one of Shrek/’s closest allies."
+},
+{
+  "_id": 21,
+  "Title": "That Darn Cat!",
+  "Img": "/img/that_darn_cat.jpg",
+  "Director": "Robert Stevenson",
+  "Cat": {
+    "Name": "D.C.",
+    "ColorBreed": "Siamese",
+    "Bio": "D.C. is a Siamese cat who helps the FBI solve a kidnapping case by bringing home a wristwatch that belonged to the victim."
+  },
+  "Genre": {
+    "Name": "Crime",
+    "Description": "Crime movies revolve around criminal activities, including investigations, heists, and the consequences of breaking the law."
+  },
+  "Animation": false,
+  "Year": "1965",
+  "Synopsis": "A Siamese cat named D.C. helps the FBI solve a kidnapping case when he brings home a wristwatch that belonged to the victim."
+},
+{
+  "_id": 22,
+  "Title": "The Adventures of Milo and Otis",
+  "Img": "/img/milo_and_otis.jpg",
+  "Director": "Masanori Hata",
+  "Cat": {
+    "Name": "Milo",
+    "ColorBreed": "Orange tabby",
+    "Bio": "Milo is a curious kitten who goes on an epic adventure with his best friend, a pug named Otis, after they are separated."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": false,
+  "Year": "1986",
+  "Synopsis": "A curious kitten named Milo and his best friend, a pug named Otis, embark on an epic adventure across the countryside after they are accidentally separated."
+},
+{
+  "_id": 24,
+  "Title": "The Black Cat",
+  "Img": "/img/the_black_cat.jpg",
+  "Director": "Edgar G. Ulmer",
+  "Cat": {
+    "Name": "The Black Cat",
+    "ColorBreed": "Black",
+    "Bio": "This unnamed black cat symbolizes bad luck and foreshadows danger. It serves as a sinister presence in the gothic story."
+  },
+  "Genre": {
+    "Name": "Horror",
+    "Description": "Horror movies are designed to scare and unsettle, often featuring supernatural elements, monsters, or psychological terror."
+  },
+  "Animation": false,
+  "Year": "1934",
+  "Synopsis": "This classic horror film, loosely based on Edgar Allan Poe’s story, features a mysterious black cat that seems to have a supernatural influence over the events in a creepy mansion."
+},
+{
+  "_id": 25,
+  "Title": "The Cat in the Hat",
+  "Img": "/img/cat_in_the_hat.jpg",
+  "Director": "Bo Welch",
+  "Cat": {
+    "Name": "The Cat in the Hat",
+    "ColorBreed": "Black and white",
+    "Bio": "The Cat in the Hat is a mischievous and whimsical feline who brings chaos and fun wherever he goes, much to the dismay of the children he visits."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike."
+  },
+  "Animation": false,
+  "Year": "2003",
+  "Synopsis": "The Cat in the Hat, a playful and chaotic feline, visits two bored children and turns their dull day into an adventure filled with mischief and fun."
+},
+{
+  "_id": 26,
+  "Title": "The Cat Returns",
+  "Img": "/img/the_cat_returns.jpg",
+  "Director": "Hiroyuki Morita",
+  "Cat": {
+    "Name": "Cat King (King of the Cat Kingdom), Baron, and Haru",
+    "ColorBreed": "Cat King (regal appearance), Baron (anthropomorphic cat, elegant attire), Haru (white cat with a bow)",
+    "Bio": "Baron is a suave, anthropomorphic cat statue who comes to life and helps Haru, a girl who saved a cat and is taken to the Cat Kingdom. Haru is a human who turns into a cat in the Cat Kingdom."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": true,
+  "Year": "2002",
+  "Synopsis": "A young girl saves a cat and is taken to the mysterious Kingdom of Cats, where she must figure out how to return to her normal life."
+},
+{
+  "_id": 27,
+  "Title": "The Cat That Walked by Himself",
+  "Img": "/img/the_cat_that_walked.jpg",
+  "Director": "Aleksandr Efremov",
+  "Cat": {
+    "Name": "The Cat",
+    "ColorBreed": "Wild cat",
+    "Bio": "The story follows a wild cat who learns to live alongside humans while maintaining his independence, based on Kipling’s story."
+  },
+  "Genre": {
+    "Name": "Adventure",
+    "Description": "Adventure genre focus on exciting journeys and quests, often involving exploration, danger, and new experiences."
+  },
+  "Animation": true,
+  "Year": "1988",
+  "Synopsis": "Based on Rudyard Kipling's story, this animated film explores the story of a wild cat that learns to live alongside humans while maintaining his independence."
+},
+{
+  "_id": 28,
+  "Title": "The Garfield Movie",
+  "Img": "/img/the_garfield_movie.png",
+  "Director": "Peter Hewitt",
+  "Cat": {
+    "Name": "Garfield",
+    "ColorBreed": "Orange tabby",
+    "Bio": "Garfield is a lazy, sarcastic, and food-loving cat who enjoys lounging and making witty remarks. He dislikes Mondays and loves lasagna."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike"
+  },
+  "Animation": true,
+  "Year": "2004",
+  "Synopsis": "Garfield, a lazy and sarcastic cat, must deal with a new dog, Odie, in his home. When Odie is kidnapped, Garfield sets out to rescue him."
+},
+{
+  "_id": 23,
+  "Title": "The Aristocats",
+  "Img": "/img/the_aristocats.jpg",
+  "Director": "Wolfgang Reitherman",
+  "Cat": {
+    "Name": "Duchess (mother) and her kittens: Marie, Berlioz, and Toulouse.",
+    "ColorBreed": "Duchess (white Persian), Marie (white Persian), Berlioz (gray kitten), Toulouse (orange kitten).",
+    "Bio": "Duchess is a refined, elegant mother cat who lives in Paris with her three kittens. Marie is sweet and ladylike, Berlioz is musically inclined, and Toulouse is artistic and adventurous."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike."
+  },
+  "Animation": true,
+  "Year": "1970",
+  "Synopsis": "A wealthy old woman plans to leave her fortune to her cats, but her butler tries to get rid of them. The cats must find their way back home with the help of a charming alley cat."
+},
+{
+  "_id": 32,
+  "Title": "The Secret Life of Pets",
+  "Img": "/img/the_secret_life_of_pets.jpg",
+  "Director": "Chris Renaud",
+  "Cat": {
+    "Name": "Chloe",
+    "ColorBreed": "Gray tabby",
+    "Bio": "Chloe is a sarcastic and slightly overweight cat who, along with other pets, has adventures while their owners are away."
+  },
+  "Genre": {
+    "Name": "Family",
+    "Description": "Family films are designed to be suitable for all ages, often featuring themes and stories that are engaging and appropriate for children and adults alike."
+  },
+  "Animation": true,
+  "Year": "2016",
+  "Synopsis": "When their owners leave for the day, a group of pets, including a sarcastic cat named Chloe, embark on their own wild adventures in the city."
+}]
