@@ -16,8 +16,8 @@ const auth = require('./auth')(app);
 
 console.log("MongoDB URI:", process.env.CONNECTION_URI);
 
-mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
-  // mongoose.connect( process.env.CONNECTION_URI, {
+// mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/?retryWrites=true&w=majority&appName=SophieFauDB", {
+  mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   })
@@ -27,9 +27,6 @@ mongoose.connect( "mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.g
   .catch(err => {
     console.error("MongoDB connection error:", err);
 });
-
-// Close the connection after updates
-mongoose.connection.close();
 
 // Parse incoming request (POST)
 app.use(morgan("common"));
