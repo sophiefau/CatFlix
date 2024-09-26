@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-let movieSchema = Schema({
+let movieSchema = new Schema({
   Title: { type: String, required: true },
   ImgPath: String,
   Director: String,
@@ -18,7 +18,7 @@ let movieSchema = Schema({
   Synopsis: { type: String, required: true },
 });
 
-let userSchema = Schema({
+let userSchema = new Schema({
   Username: { type: String, required: true, unique: true },
   Email: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
@@ -39,9 +39,8 @@ userSchema.methods.validatePassword = function(password) {
 const Movie = model("Movie", movieSchema);
 const User = model("User", userSchema);
 
-// module.exports = { Movie };
-// module.exports = { User };
-const _Movie = Movie;
-export { _Movie as Movie };
-const _User = User;
-export { _User as User };
+module.exports = { Movie, User };
+// const _Movie = Movie;
+// export { _Movie as Movie };
+// const _User = User;
+// export { _User as User };
