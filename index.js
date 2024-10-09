@@ -45,10 +45,10 @@ app.use(cors({
   }
 }));
 
-// // Authentification
-// let auth = require('./auth')(app);
-// const passport = require('passport');
-// require('./passport');
+// Authentification
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 //GET documentation file
 app.use(express.static("public"));
