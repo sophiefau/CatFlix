@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -26,10 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-
-
-// Allow origins
-const cors = require('cors');
 app.use(cors());
 
 let allowedOrigins = ['http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com'];
