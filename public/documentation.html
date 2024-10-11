@@ -77,8 +77,20 @@
       </td>
     </tr>
     <tr>
-      <td>Allow new users to register.</td>
+      <td>Allow users to login.</td>
       <td>/login</td>
+      <td>POST</td>
+      <td>A JSON object holding data about a user (username, password). Example:<br />
+          Username: "Sophie",<br />
+          Email: "sophie@gmail.com",<br />
+      </td>
+      <td>A message confirming succesful login or denial. Example:<br />
+          "login denied"<br />
+      </td>
+    </tr>
+    <tr>
+      <td>Allow new users to register.</td>
+      <td>/users</td>
       <td>POST</td>
       <td>A JSON object holding data about a new user (username, email, password). Example:<br />
           Username: "Sophie",<br />
