@@ -133,7 +133,7 @@ app.get("/cats/:Name", passport.authenticate('jwt', { session: false }), async (
 });
 
 // CREATE new users
-app.post("/register", 
+app.post("/users", 
   [
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
