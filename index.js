@@ -151,12 +151,14 @@ app.post("/users",
    // Check if the username already exists
    const usernameExists = await Users.findOne({ Username: req.body.Username });
    if (usernameExists) {
+    console.log("Username already taken:", req.body.Username);
      return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
    }
 
    // Check if the email already exists
    const emailExists = await Users.findOne({ Email: req.body.Email });
    if (emailExists) {
+    console.log("Email already exists:", req.body.Email);
      return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
    }
   
