@@ -141,38 +141,39 @@ app.post("/users",
   check('Email', 'Email is not valid').isEmail()
 ],
   async (req, res) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
   let hashedPassword = await Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + " already exists");
-      } else {
-        Users.create({
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        })
-          .then((user) => {
-            res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
+
+   // Check if the username already exists
+   const usernameExists = await Users.findOne({ Username: req.body.Username });
+   if (usernameExists) {
+     return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
+   }
+
+   // Check if the email already exists
+   const emailExists = await Users.findOne({ Email: req.body.Email });
+   if (emailExists) {
+     return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
+   }
+  
+   try {
+    const user = await Users.create({
+      Username: req.body.Username,
+      Password: hashedPassword,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
     });
-});
+    res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ errors: [{ msg: "Error creating user: " + error.message }] });
+  }
+}
+);
 
 // READ Get all users
 app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
