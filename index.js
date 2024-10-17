@@ -8,6 +8,7 @@ const Users = Models.User;
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
+const { swaggerUi, swaggerDocs } = require('./swagger'); 
 
 const app = express();
 
@@ -27,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
+// Get documentation
+app.use(express.static("public"));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Allow origins
 app.use(cors());
@@ -50,15 +54,36 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-//GET documentation file
-app.use(express.static("public"));
 
-// READ
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Welcome message
+ *     responses:
+ *       200:
+ *         description: Welcome to CatFlix, an app showcasing movies with cats!
+ */
 app.get("/", (req, res) => {
-  res.send("Welcome to CatFlix, an app showcasing movies featurings cats!");
+  res.send("Welcome to CatFlix, an app showcasing movies with cats!");
 });
 
-// READ Return all movies' list
+// GET all movies
+/**
+ * @swagger
+ * /movies:
+ *   get:
+ *     summary: Get all movies
+ *     responses:
+ *       200:
+ *         description: A list of movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Movie'
+ */
 app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
     .then((movies) => {
@@ -70,7 +95,27 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
-// READ Get movie by title
+// GET movie by title
+/**
+ * @swagger
+ * /movies/{title}:
+ *   get:
+ *     summary: Get a movie by title
+ *     parameters:
+ *       - in: path
+ *         name: title
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Title of the movie
+ *     responses:
+ *       200:
+ *         description: A movie object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movie'
+ */
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ Title: req.params.Title })
   .then((movie) => {
@@ -89,7 +134,27 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), asyn
   });
 });
 
-// READ Get genre by name
+// GET genre by name
+/**
+ * @swagger
+ * /movies/genre/{name}:
+ *   get:
+ *     summary: Get a movie by genre name
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Name of the genre
+ *     responses:
+ *       200:
+ *         description: A genre object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Genre'
+ */
 app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Genre.Name": req.params.Name })
     .then((genre) => {
@@ -107,7 +172,27 @@ app.get("/genres/:Name", passport.authenticate('jwt', { session: false }), async
     });
 });
 
-// READ Get a cat details by name
+// GET a cat by name
+/**
+ * @swagger
+ * /cat/{name}:
+ *   get:
+ *     summary: Get a cat by name
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Name of the cat
+ *     responses:
+ *       200:
+ *         description: A cat object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Director'
+ */
 app.get("/cats/:Name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Cat.Name": req.params.Name }) // Adjusted to search in the Cat object
     .then((movie) => {
@@ -132,7 +217,28 @@ app.get("/cats/:Name", passport.authenticate('jwt', { session: false }), async (
     });
 });
 
-// CREATE new users
+// POST create new user
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: The created user object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Username already exists
+ */
 app.post("/users", 
   [
   check('Username', 'Username is required').isLength({min: 5}),
@@ -177,7 +283,22 @@ app.post("/users",
 }
 );
 
-// READ Get all users
+// GET all users
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     responses:
+ *       200:
+ *         description: A list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
 app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
@@ -207,7 +328,35 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), as
     });
 });
 
-// UPDATE Allow users to update their user info (username, password, email, date of birth)
+// PUT update username, password, email, or date of birth
+/**
+ * @swagger
+ * /users/{username}:
+ *   put:
+ *     summary: Update a user by username
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username of the user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The updated user object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Error updating user
+ */
 app.put("/users/:Username", 
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
@@ -244,6 +393,34 @@ app.put("/users/:Username",
 });
 
 // POST add a movie to favorites
+/**
+ * @swagger
+ * /users/{username}/movies/{MovieID}:
+ *   post:
+ *     summary: Add a movie to a user's list of favorites
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username of the user
+ *       - in: path
+ *         name: MovieID
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the movie to add
+ *     responses:
+ *       200:
+ *         description: The updated user object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Error adding movie to favorites
+ */
 app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
@@ -264,7 +441,35 @@ app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { s
     });
 });
 
-// DELETE remove a movie from favorites
+// DELETE remove a movie from favorite
+/**
+ * @swagger
+ * /users/{username}/movies/{MovieID}:
+ *   delete:
+ *     summary: Remove a movie from a user's list of favorites
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username of the user
+ *       - in: path
+ *         name: MovieID
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the movie to remove
+ *     responses:
+ *       200:
+ *         description: The updated user object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Error removing movie from favorites
+ */
 app.delete("/users/:Username/favorites/:movieID",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
@@ -290,7 +495,25 @@ app.delete("/users/:Username/favorites/:movieID",  passport.authenticate('jwt', 
     });
 });
 
-// DELETE Delete a user by username
+// DELETE a user by username
+/**
+ * @swagger
+ * /users/{username}:
+ *   delete:
+ *     summary: Delete a user by username
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username of the user to delete
+ *     responses:
+ *       200:
+ *         description: User was deleted
+ *       400:
+ *         description: User was not found
+ */
 app.delete("/users/:Username",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
