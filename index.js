@@ -421,7 +421,7 @@ app.put("/users/:Username",
  *       500:
  *         description: Error adding movie to favorites
  */
-app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.post("/users/:Username/movies/:movieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
   }
@@ -470,7 +470,7 @@ app.post("/users/:Username/favorites/:movieID", passport.authenticate('jwt', { s
  *       500:
  *         description: Error removing movie from favorites
  */
-app.delete("/users/:Username/favorites/:movieID",  passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.delete("/users/:Username/movies/:movieID",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
     return res.status(400).send('Permission denied');
   }
