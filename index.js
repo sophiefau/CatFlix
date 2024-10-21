@@ -328,7 +328,7 @@ app.get("/users/:username", passport.authenticate('jwt', { session: false }), as
     });
 });
 
-// PUT update username, password, email, or date of birth
+// PUT/PATCH update username, password, email, or date of birth
 /**
  * @swagger
  * /users/{username}:
@@ -357,12 +357,12 @@ app.get("/users/:username", passport.authenticate('jwt', { session: false }), as
  *       500:
  *         description: Error updating user
  */
-app.put("/users/:username", 
+app.patch("/users/:username", 
   [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+    check('Username', 'Username is required').optional().isLength({ min: 5 }),
+    check('Username', 'Username contains non-alphanumeric characters - not allowed.').optional().isAlphanumeric(),
+    check('Password', 'Password is required').optional().not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').optional().isEmail()
   ],
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
@@ -370,27 +370,37 @@ app.put("/users/:username",
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-      $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
+
+    try {
+      const updateFields = {};
+      
+      // Only include fields that are present in the request body
+      if (req.body.Username) updateFields.Username = req.body.Username;
+      if (req.body.Password) {
+        // Hash the password before saving (assuming you have a hash function)
+        updateFields.Password = await hashPassword(req.body.Password);
       }
-    },
-    { new: true }) // This line makes sure that the updated document is returned
-    .then((updatedUser) => {
-      res.status(200).json({ 
-        Username: updatedUser.Username, 
-        Email: updatedUser.Email, 
-        Birthday: updatedUser.Birthday 
-      });
-    })
-    .catch((err) => {
+      if (req.body.Email) updateFields.Email = req.body.Email;
+      if (req.body.Birthday) updateFields.Birthday = req.body.Birthday;
+
+      const updatedUser = await Users.findOneAndUpdate(
+        { Username: req.params.username }, // Ensure consistent casing
+        { $set: updateFields },
+        { new: true } // This line makes sure that the updated document is returned
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Respond with the updated user details
+      res.status(200).json(updatedUser); // This sends back the full updated user object
+    } catch (err) {
       console.error(err);
-      res.status(500).send("Error: " + err);
-    })
+      res.status(500).send("Error: " + err.message); // Provide the error message
+    }
 });
+
 
 // POST add a movie to favorites
 /**
