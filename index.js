@@ -461,9 +461,10 @@ app.patch("/users/:username",
  *         description: Error adding movie to favorites
  */
 app.post("/users/:username/:movieId", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  console.log("Authenticated User:", req.user);
   if(req.user.Username !== req.params.username){
     return res.status(400).send('Permission denied');
-  }
+  } 
   await Users.findOneAndUpdate(
     { Username: req.params.username },
     {
