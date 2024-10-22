@@ -98,7 +98,7 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
 // GET movie by title
 /**
  * @swagger
- * /movies/{title}:
+ * /movies/{movieId}:
  *   get:
  *     summary: Get a movie by title
  *     parameters:
@@ -116,23 +116,37 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
  *             schema:
  *               $ref: '#/components/schemas/Movie'
  */
-app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.findOne({ title: req.params.title })
-  .then((movie) => {
+app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Movies.findById(req.params.movieId )
+    .then((movie) => {
       if (movie) {
-          res.json(movie);
+        res.json(movie);
       } else {
-          res.status(404).send(
-              'Movie with the title ' +
-                  req.params.title +
-                  ' was not found.'
-          );
-      }})
-  .catch((err) => {
+        res.status(404).send('Movie with the ID ' + req.params.movieId  + ' was not found.');
+      }
+    })
+    .catch((err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
-  });
+    });
 });
+//  app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
+//   await Movies.findOne({ title: req.params.title })
+//   .then((movie) => {
+//       if (movie) {
+//           res.json(movie);
+//       } else {
+//           res.status(404).send(
+//               'Movie with the title ' +
+//                   req.params.title +
+//                   ' was not found.'
+//           );
+//       }})
+//   .catch((err) => {
+//       console.error(err);
+//       res.status(500).send('Error: ' + err);
+//   });
+// });
 
 // GET genre by name
 /**
@@ -454,7 +468,7 @@ app.post("/users/:username/movies/:movieID", passport.authenticate('jwt', { sess
 // DELETE remove a movie from favorite
 /**
  * @swagger
- * /users/{username}/movies/{MovieID}:
+ * /users/{username}/movies/{movieID}:
  *   delete:
  *     summary: Remove a movie from a user's list of favorites
  *     parameters:
