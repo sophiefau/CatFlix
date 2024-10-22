@@ -95,12 +95,12 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
-// GET movie by title
+// GET movie by ID
 /**
  * @swagger
  * /movies/{movieId}:
  *   get:
- *     summary: Get a movie by title
+ *     summary: Get a movie by ID
  *     parameters:
  *       - in: path
  *         name: title
@@ -151,7 +151,7 @@ app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), as
 // GET genre by name
 /**
  * @swagger
- * /movies/genre/{name}:
+ * /movies/genres/{name}:
  *   get:
  *     summary: Get a movie by genre name
  *     parameters:
@@ -189,7 +189,7 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
 // GET a cat by name
 /**
  * @swagger
- * /cat/{name}:
+ * /cats/{name}:
  *   get:
  *     summary: Get a cat by name
  *     parameters:
@@ -205,7 +205,7 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Director'
+ *               $ref: '#/components/schemas/Cats'
  */
 app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Cat.name": req.params.name }) // Adjusted to search in the Cat object
@@ -234,7 +234,7 @@ app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (
 // POST create new user
 /**
  * @swagger
- * /users:
+ * /signup:
  *   post:
  *     summary: Create a new user
  *     requestBody:
@@ -242,18 +242,18 @@ app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/signup'
  *     responses:
  *       201:
  *         description: The created user object
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/signup'
  *       400:
  *         description: Username already exists
  */
-app.post("/users", 
+app.post("/signup", 
   [
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -328,6 +328,21 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 // READ Get a user by username
+/**
+ * @swagger
+ * /users/{username}:
+ *   get:
+ *     summary: Get a user by username
+ *     responses:
+ *       200:
+ *         description: 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               items:
+ *                 $ref: 
+ */
 app.get("/users/:username", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.username){
     return res.status(400).send('Permission denied');
@@ -342,11 +357,11 @@ app.get("/users/:username", passport.authenticate('jwt', { session: false }), as
     });
 });
 
-// PUT/PATCH update username, password, email, or date of birth
+// PATCH update username, password, email, or date of birth
 /**
  * @swagger
  * /users/{username}:
- *   put:
+ *   patch:
  *     summary: Update a user by username
  *     parameters:
  *       - in: path
@@ -419,7 +434,7 @@ app.patch("/users/:username",
 // POST add a movie to favorites
 /**
  * @swagger
- * /users/{username}/movies/{MovieID}:
+ * /users/{username}/{movieID}:
  *   post:
  *     summary: Add a movie to a user's list of favorites
  *     parameters:
@@ -430,7 +445,7 @@ app.patch("/users/:username",
  *           type: string
  *         description: Username of the user
  *       - in: path
- *         name: MovieID
+ *         name: movieId
  *         required: true
  *         schema:
  *           type: string
@@ -445,14 +460,14 @@ app.patch("/users/:username",
  *       500:
  *         description: Error adding movie to favorites
  */
-app.post("/users/:username/movies/:movieID", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.post("/users/:username/:movieId", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.username){
     return res.status(400).send('Permission denied');
   }
   await Users.findOneAndUpdate(
     { Username: req.params.username },
     {
-      $push: { FavoriteMovies: req.params.movieID },
+      $push: { FavoriteMovies: req.params.movieId },
     },
     { new: true }
   ) // This line makes sure that the updated document is returned
@@ -468,7 +483,7 @@ app.post("/users/:username/movies/:movieID", passport.authenticate('jwt', { sess
 // DELETE remove a movie from favorite
 /**
  * @swagger
- * /users/{username}/movies/{movieID}:
+ * /users/{username}/{movieId}:
  *   delete:
  *     summary: Remove a movie from a user's list of favorites
  *     parameters:
@@ -494,7 +509,7 @@ app.post("/users/:username/movies/:movieID", passport.authenticate('jwt', { sess
  *       500:
  *         description: Error removing movie from favorites
  */
-app.delete("/users/:username/movies/:movieID",  passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.delete("/users/:username/:movieId",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.username){
     return res.status(400).send('Permission denied');
   }
@@ -503,7 +518,7 @@ app.delete("/users/:username/movies/:movieID",  passport.authenticate('jwt', { s
       Username: req.params.username,
     },
     {
-      $pull: { FavoriteMovies: req.params.movieID },
+      $pull: { FavoriteMovies: req.params.movieId },
     },
     { new: true }
   )
