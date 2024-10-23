@@ -421,7 +421,15 @@ app.patch("/users/:username",
         return res.status(404).json({ message: "User not found" });
       }
 
-      res.status(200).json(updatedUser); // Sends back the full updated user object
+      console.log("Updated User:", updatedUser);
+
+      const responseUser = {
+        Username: updatedUser.Username,
+        Email: updatedUser.Email,
+        Birthday: updatedUser.Birthday,
+      };
+
+      res.status(200).json(responseUser); // Sends back the full updated user object
     } catch (err) {
       console.error(err);
       res.status(500).send("Error: " + err.message);
