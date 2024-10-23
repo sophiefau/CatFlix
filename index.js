@@ -406,7 +406,6 @@ app.patch("/users/:username",
       // Only include fields that are present in the request body
       if (req.body.Username) updateFields.Username = req.body.Username;
       if (req.body.Password) {
-        // Hash the password before saving (assuming you have a hash function)
         updateFields.Password = await hashPassword(req.body.Password);
       }
       if (req.body.Email) updateFields.Email = req.body.Email;
@@ -422,11 +421,10 @@ app.patch("/users/:username",
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Respond with the updated user details
-      res.status(200).json(updatedUser); // This sends back the full updated user object
+      res.status(200).json(updatedUser); // Sends back the full updated user object
     } catch (err) {
       console.error(err);
-      res.status(500).send("Error: " + err.message); // Provide the error message
+      res.status(500).send("Error: " + err.message);
     }
 });
 
