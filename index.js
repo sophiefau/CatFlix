@@ -59,30 +59,46 @@ require('./passport');
  * @swagger
  * /:
  *   get:
- *     summary: Welcome message
+ *     summary: Welcome to CatFlix
+ *     description: Display a welcome message for the CatFlix app.
  *     responses:
  *       200:
- *         description: Welcome to CatFlix, an app showcasing movies with cats!
+ *         description: A welcome message.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
  */
 app.get("/", (req, res) => {
   res.send("Welcome to CatFlix, an app showcasing movies with cats!");
 });
 
-// GET all movies
 /**
  * @swagger
  * /movies:
  *   get:
  *     summary: Get all movies
+ *     description: Retrieve a list of all cat movies in the database. Requires JWT authentication.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of movies
+ *         description: A list of cat movies.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Movie'
+ *                 type: object
+ *                 properties:
+ *                   title:
+ *                     type: string
+ *                   year:
+ *                     type: integer
+ *                   genre:
+ *                     type: string
+ *       500:
+ *         description: Server error.
  */
 app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
@@ -95,26 +111,40 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
-// GET movie by ID
+
 /**
  * @swagger
  * /movies/{movieId}:
  *   get:
  *     summary: Get a movie by ID
+ *     description: Retrieve a single cat movie by its ID. Requires JWT authentication.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: title
+ *         name: movieId
  *         required: true
  *         schema:
  *           type: string
- *         description: Title of the movie
+ *         description: The ID of the movie to retrieve.
  *     responses:
  *       200:
- *         description: A movie object
+ *         description: A cat movie object.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Movie'
+ *               type: object
+ *               properties:
+ *                 title:
+ *                   type: string
+ *                 year:
+ *                   type: integer
+ *                 genre:
+ *                   type: string
+ *       404:
+ *         description: Movie not found.
+ *       500:
+ *         description: Server error.
  */
 app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findById(req.params.movieId )
@@ -148,26 +178,37 @@ app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), as
 //   });
 // });
 
-// GET genre by name
 /**
  * @swagger
- * /movies/genres/{name}:
+ * /genres/{name}:
  *   get:
- *     summary: Get a movie by genre name
+ *     summary: Get a genre by name
+ *     description: Retrieve a single genre from cat movies by its name. Requires JWT authentication.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: name
  *         required: true
  *         schema:
  *           type: string
- *         description: Name of the genre
+ *         description: The name of the genre to retrieve.
  *     responses:
  *       200:
- *         description: A genre object
+ *         description: A genre object.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Genre'
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *       404:
+ *         description: Genre not found.
+ *       500:
+ *         description: Server error.
  */
 app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Genre.name": req.params.name })
@@ -186,26 +227,43 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
     });
 });
 
-// GET a cat by name
 /**
  * @swagger
  * /cats/{name}:
  *   get:
  *     summary: Get a cat by name
+ *     description: Retrieve cat details from a movie by the cat's name. Requires JWT authentication.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: name
  *         required: true
  *         schema:
  *           type: string
- *         description: Name of the cat
+ *         description: The name of the cat to retrieve.
  *     responses:
  *       200:
- *         description: A cat object
+ *         description: Cat details from the movie.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Cats'
+ *               type: object
+ *               properties:
+ *                 Name:
+ *                   type: string
+ *                 ColorBreed:
+ *                   type: string
+ *                 Bio:
+ *                   type: string
+ *                 Title:
+ *                   type: string
+ *                 Genre:
+ *                   type: string
+ *       404:
+ *         description: No movie with a cat of the specified name found.
+ *       500:
+ *         description: Server error.
  */
 app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.findOne({ "Cat.name": req.params.name }) // Adjusted to search in the Cat object
@@ -231,27 +289,52 @@ app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (
     });
 });
 
-// POST create new user
 /**
  * @swagger
  * /signup:
  *   post:
  *     summary: Create a new user
+ *     description: Sign up a new user with a username, password, and email. Validations are applied. 
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/signup'
+ *             type: object
+ *             properties:
+ *               Username:
+ *                 type: string
+ *                 description: Unique username for the user. Must be at least 5 characters long and alphanumeric.
+ *               Password:
+ *                 type: string
+ *                 description: Password for the user. Must be at least 8 characters long.
+ *               Email:
+ *                 type: string
+ *                 description: Email address for the user. Must be a valid email format.
+ *               Birthday:
+ *                 type: string
+ *                 format: date
+ *                 description: Optional birthday of the user in YYYY-MM-DD format.
  *     responses:
  *       201:
- *         description: The created user object
+ *         description: User created successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/signup'
+ *               type: object
+ *               properties:
+ *                 Username:
+ *                   type: string
+ *                 Email:
+ *                   type: string
+ *                 Birthday:
+ *                   type: string
  *       400:
- *         description: Username already exists
+ *         description: Bad request. Username or email already exists, or validation errors.
+ *       422:
+ *         description: Validation errors.
+ *       500:
+ *         description: Server error.
  */
 app.post("/signup", 
   [
@@ -297,21 +380,35 @@ app.post("/signup",
 }
 );
 
-// GET all users
 /**
  * @swagger
  * /users:
  *   get:
  *     summary: Get all users
+ *     description: Retrieve a list of all registered users. Requires JWT authentication.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of users
+ *         description: List of users retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                 type: object
+ *                 properties:
+ *                   Username:
+ *                     type: string
+ *                   Email:
+ *                     type: string
+ *                   Birthday:
+ *                     type: string
+ *                     format: date
+ *       400:
+ *         description: Permission denied. Only the user can access their own information.
+ *       500:
+ *         description: Server error.
  */
 app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.Username){
@@ -327,29 +424,54 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
     });
 });
 
-// READ Get a user by username
 /**
  * @swagger
  * /users/{username}:
  *   get:
  *     summary: Get a user by username
+ *     description: Retrieve the details of a user by their username. Requires JWT authentication. The user can only access their own information.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: username
+ *         in: path
+ *         required: true
+ *         description: The username of the user to retrieve.
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: 
+ *         description: User details retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
- *               type: string
- *               items:
- *                 $ref: 
+ *               type: object
+ *               properties:
+ *                 Username:
+ *                   type: string
+ *                 Email:
+ *                   type: string
+ *                 Birthday:
+ *                   type: string
+ *                   format: date
+ *       400:
+ *         description: Permission denied. Users can only access their own information.
+ *       404:
+ *         description: User not found with the specified username.
+ *       500:
+ *         description: Server error.
  */
 app.get("/users/:username", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  if(req.user.Username !== req.params.username){
+  if (req.user.Username !== req.params.username) {
     return res.status(400).send('Permission denied');
   }
   await Users.findOne({ Username: req.params.username })
     .then((user) => {
-      res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
+      if (user) {
+        res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
+      } else {
+        res.status(404).send('User not found with the specified username.');
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -357,34 +479,62 @@ app.get("/users/:username", passport.authenticate('jwt', { session: false }), as
     });
 });
 
-// PATCH update username, password, email, or date of birth
 /**
  * @swagger
  * /users/{username}:
  *   patch:
- *     summary: Update a user by username
+ *     summary: Update user information
+ *     description: Update the details of a user by their username. Requires JWT authentication. Only the fields provided in the request body will be updated.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: username
+ *       - name: username
+ *         in: path
  *         required: true
+ *         description: The username of the user to update.
  *         schema:
  *           type: string
- *         description: Username of the user
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             type: object
+ *             properties:
+ *               Username:
+ *                 type: string
+ *                 description: The new username for the user (optional).
+ *               Password:
+ *                 type: string
+ *                 description: The new password for the user (optional).
+ *               Email:
+ *                 type: string
+ *                 description: The new email for the user (optional).
+ *               Birthday:
+ *                 type: string
+ *                 format: date
+ *                 description: The user's birthday (optional).
  *     responses:
  *       200:
- *         description: The updated user object
+ *         description: User information updated successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 Username:
+ *                   type: string
+ *                 Email:
+ *                   type: string
+ *                 Birthday:
+ *                   type: string
+ *                   format: date
+ *       400:
+ *         description: Validation error for the provided fields.
+ *       404:
+ *         description: User not found with the specified username.
  *       500:
- *         description: Error updating user
+ *         description: Server error.
  */
 app.patch("/users/:username", 
   [
@@ -436,35 +586,47 @@ app.patch("/users/:username",
     }
 });
 
-
-// POST add a movie to favorites
 /**
  * @swagger
- * /users/{username}/{movieID}:
+ * /users/{username}/{movieId}:
  *   post:
- *     summary: Add a movie to a user's list of favorites
+ *     summary: Add a movie to favorites
+ *     description: Add a movie to a user's favorites list by their username and the movie's ID. Requires JWT authentication. The authenticated user's username must match the username in the path.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: username
+ *       - name: username
+ *         in: path
  *         required: true
+ *         description: The username of the user to add the movie to their favorites.
  *         schema:
  *           type: string
- *         description: Username of the user
- *       - in: path
- *         name: movieId
+ *       - name: movieId
+ *         in: path
  *         required: true
+ *         description: The ID of the movie to add to favorites.
  *         schema:
  *           type: string
- *         description: ID of the movie to add
  *     responses:
  *       200:
- *         description: The updated user object
+ *         description: Movie added to favorites successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 Username:
+ *                   type: string
+ *                 FavoriteMovies:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       400:
+ *         description: Permission denied or bad request due to username mismatch.
+ *       404:
+ *         description: User not found.
  *       500:
- *         description: Error adding movie to favorites
+ *         description: Server error.
  */
 app.post("/users/:username/:movieId", passport.authenticate('jwt', { session: false }), async (req, res) => {
   console.log("Authenticated User:", req.user);
@@ -487,34 +649,47 @@ app.post("/users/:username/:movieId", passport.authenticate('jwt', { session: fa
     });
 });
 
-// DELETE remove a movie from favorite
 /**
  * @swagger
  * /users/{username}/{movieId}:
  *   delete:
- *     summary: Remove a movie from a user's list of favorites
+ *     summary: Remove a movie from favorites
+ *     description: Remove a movie from a user's favorites list by their username and the movie's ID. Requires JWT authentication. The authenticated user's username must match the username in the path.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: username
+ *       - name: username
+ *         in: path
  *         required: true
+ *         description: The username of the user from whom to remove the movie from favorites.
  *         schema:
  *           type: string
- *         description: Username of the user
- *       - in: path
- *         name: MovieID
+ *       - name: movieId
+ *         in: path
  *         required: true
+ *         description: The ID of the movie to remove from favorites.
  *         schema:
  *           type: string
- *         description: ID of the movie to remove
  *     responses:
  *       200:
- *         description: The updated user object
+ *         description: Movie removed from favorites successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 Username:
+ *                   type: string
+ *                 FavoriteMovies:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       400:
+ *         description: Permission denied due to username mismatch.
+ *       404:
+ *         description: User not found or movie not found in favorites.
  *       500:
- *         description: Error removing movie from favorites
+ *         description: Server error.
  */
 app.delete("/users/:username/:movieId",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.username){
@@ -541,24 +716,28 @@ app.delete("/users/:username/:movieId",  passport.authenticate('jwt', { session:
     });
 });
 
-// DELETE a user by username
 /**
  * @swagger
  * /users/{username}:
  *   delete:
- *     summary: Delete a user by username
+ *     summary: Delete a user
+ *     description: Delete a user by their username. Requires JWT authentication. The authenticated user's username must match the username in the path.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: username
+ *       - name: username
+ *         in: path
  *         required: true
+ *         description: The username of the user to delete.
  *         schema:
  *           type: string
- *         description: Username of the user to delete
  *     responses:
  *       200:
- *         description: User was deleted
+ *         description: User deleted successfully.
  *       400:
- *         description: User was not found
+ *         description: Permission denied due to username mismatch or user not found.
+ *       500:
+ *         description: Server error.
  */
 app.delete("/users/:username",  passport.authenticate('jwt', { session: false }), async (req, res) => {
   if(req.user.Username !== req.params.username){
