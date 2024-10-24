@@ -15,3 +15,7 @@ Here is a list of the CatFlix app essential features:
 - Allow users to add a movie to their list of favorites
 - Allow users to remove a movie from their list of favorites
 - Allow existing users to deregister
+
+# Documentation
+
+Here you can see the documentation with Swagger: https://catflix-99a985e6fffa.herokuapp.com/api-docs/
