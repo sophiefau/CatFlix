@@ -11,16 +11,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:8080',
+        url: 'http://localhost:8080', // Local development
+      },
+      {
+        url: 'https://catflix-99a985e6fffa.herokuapp.com', // Heroku deployment
       },
     ],
   },
   apis: ['./index.js'],
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-
-module.exports = {
-  swaggerUi,
-  swaggerDocs,
 };
