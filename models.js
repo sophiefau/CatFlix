@@ -24,7 +24,7 @@ let userSchema = new Schema({
   Email: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
   Birthday: Date,
-  FavoriteMovies: [{ type: Number, ref: "Movie" }],
+  FavoriteMovies: [{ type: Schema.Types.ObjectID, ref: "Movie" }],
 });
 
 // HashPassword function
