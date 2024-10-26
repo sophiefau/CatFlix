@@ -21,20 +21,62 @@ let generateJWTToken = (user) => {
 /* POST login. */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
-    passport.authenticate('local', { session: false }, (error, user, info) => {
-      if (error || !user) {
-        return res.status(400).json({
-          message: 'Something is not right',
-          user: user
+    passport.authenticate('local', { session: false }, async (error, user, info) => {
+      if (error) {
+        // Handle any authentication errors (like database connection issues)
+        return res.status(500).json({
+          message: 'Something went wrong with the authentication process.',
+          error: error.message,
         });
       }
+      
+      if (!user) {
+        return res.status(401).json({
+          message: 'User not found.',
+        });
+      }
+
+      // If user is found, check the password
+      const isMatch = await bcrypt.compare(req.body.Password, user.passwordHash);
+      if (!isMatch) {
+        return res.status(401).json({
+          message: 'Invalid password.',
+        });
+      }
+      
       req.login(user, { session: false }, (error) => {
         if (error) {
-          res.send(error);
+          return res.status(500).json({ message: 'Login error: ' + error.message });
         }
         let token = generateJWTToken(user); 
         return res.json({ user, token }); // Return user data and the token
       });
     })(req, res);
   });
-}
+};
+
+
+
+
+
+
+
+// module.exports = (router) => {
+//   router.post('/login', (req, res) => {
+//     passport.authenticate('local', { session: false }, (error, user, info) => {
+//       if (error || !user) {
+//         return res.status(400).json({
+//           message: 'Something is not right',
+//           user: user
+//         });
+//       }
+//       req.login(user, { session: false }, (error) => {
+//         if (error) {
+//           res.send(error);
+//         }
+//         let token = generateJWTToken(user); 
+//         return res.json({ user, token }); // Return user data and the token
+//       });
+//     })(req, res);
+//   });
+// }
