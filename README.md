@@ -18,4 +18,4 @@ Here is a list of the CatFlix app essential features:
 
 # Documentation
 
-Here you can see the documentation with Swagger: https://catflix-99a985e6fffa.herokuapp.com/api-docs/
+You can access to the documentation with Swagger: https://catflix-99a985e6fffa.herokuapp.com/api-docs/
