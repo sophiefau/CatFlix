@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-const Users = require('./models/users');
+const Users = require('./models.js');
 
 require('./passport'); // Your local passport file
 
