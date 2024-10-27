@@ -130,3 +130,9 @@ Timestamp: Tue Sep 24 2024 18:02:18 GMT+0200 (Central European Summer Time)
 URL: http://localhost:8080/movies
 Timestamp: Wed Sep 25 2024 11:20:23 GMT+0200 (Central European Summer Time)
 
+URL: http://localhost:8080/users
+Timestamp: Sun Oct 27 2024 14:04:56 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/favicon.ico
+Timestamp: Sun Oct 27 2024 14:30:32 GMT+0100 (Central European Standard Time)
+
