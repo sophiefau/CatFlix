@@ -1,6 +1,7 @@
 const jwtSecret = 'your_jwt_secret'; // This has to be the same key used in the JWTStrategy
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const LocalStrategy = require("passport-local").Strategy;
 
 require('./passport'); // Your local passport file
 
@@ -37,31 +38,35 @@ module.exports = (router) => {
   });
 }
 
-// module.exports = (router) => {
-//   router.post('/login', (req, res) => {
-//     passport.authenticate('local', { session: false }, async (error, user, info) => {
-//       if (error) {
-//         // Handle any authentication errors (like database connection issues)
-//         console.log('Authentication error:', error);
-//         return res.status(500).json({
-//           message: 'Something went wrong with the authentication process.',
-//           error: error.message,
-//         });
-//       }     
-//       if (!user) {
-//         console.log('Authentication failed:', info.message);
-//         return res.status(401).json({
-//           message: info.message,
-//         });
-//       }
-//       req.login(user, { session: false }, (error) => {
-//         if (error) {
-//           console.log('Login error:', error);
-//           return res.status(500).json({ message: 'Login error: ' + error.message });
-//         }
-//         let token = generateJWTToken(user); 
-//         return res.json({ user, token }); // Return user data and the token
-//       });
-//     })(req, res);
-//   });
-// };
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "Username",
+      passwordField: "Password",
+    },
+    async (username, password, callback) => {
+      console.log(`${username} ${password}`);
+      await Users.findOne({ Username: username })
+        .then((user) => {
+          if (!user) {
+            console.log("incorrect username");
+            return callback(null, false, {
+              message: "Incorrect username.",
+            });
+          }
+          if (!user.validatePassword(password)) {
+          console.log('incorrect password');
+          return callback(null, false, { message: 'Incorrect password.' });
+        }
+          console.log("finished");
+          return callback(null, user);
+        })
+        .catch((error) => {
+          if (error) {
+            console.log(error);
+            return callback(error);
+          }
+        });
+    }
+  )
+);
