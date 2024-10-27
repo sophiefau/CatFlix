@@ -28,13 +28,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-// Get documentation
-app.use(express.static("public"));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+// check if cors is runnning
+app.use((req, res, next) => {
+  console.log('CORS middleware running');
+  next();
+});
 
 // Allow origins
-app.use(cors());
-
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com'];
 
 app.use(cors({
@@ -54,6 +54,9 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+// Get documentation
+app.use(express.static("public"));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
