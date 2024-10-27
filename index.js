@@ -28,12 +28,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-// check if cors is runnning
-app.use((req, res, next) => {
-  console.log('CORS middleware running');
-  next();
-});
-
 // Allow origins
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com'];
 
