@@ -465,7 +465,7 @@ app.get("/users/:username", passport.authenticate('jwt', { session: false }), as
   await Users.findOne({ Username: req.params.username })
     .then((user) => {
       if (user) {
-        res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday });
+        res.status(201).json({ Username: user.Username, Email: user.Email, Birthday: user.Birthday, FavoriteMovies: user.FavoriteMovies });
       } else {
         res.status(404).send('User not found with the specified username.');
       }
@@ -556,7 +556,6 @@ app.patch("/users/:username",
         updateFields.Password = await hashPassword(req.body.Password);
       }
       if (req.body.Email) updateFields.Email = req.body.Email;
-      if (req.body.Birthday) updateFields.Birthday = req.body.Birthday;
 
       const updatedUser = await Users.findOneAndUpdate(
         { Username: req.params.username }, // Ensure consistent casing
@@ -573,7 +572,6 @@ app.patch("/users/:username",
       const responseUser = {
         Username: updatedUser.Username,
         Email: updatedUser.Email,
-        Birthday: updatedUser.Birthday,
       };
 
       res.status(200).json(responseUser); // Sends back the full updated user object
