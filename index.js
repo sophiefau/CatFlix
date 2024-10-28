@@ -157,6 +157,7 @@ app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), as
       res.status(500).send('Error: ' + err);
     });
 });
+
 //  app.get("/movies/:title", passport.authenticate('jwt', { session: false }), async (req, res) => {
 //   await Movies.findOne({ title: req.params.title })
 //   .then((movie) => {
@@ -207,34 +208,34 @@ app.get("/movies/:movieId", passport.authenticate('jwt', { session: false }), as
  *       500:
  *         description: Server error.
  */
-app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.findOne({ "Genre.name": req.params.name })
-    .then((genre) => {
+app.get('/genres/:name', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Movies.findOne({ 'Genre.Name': req.params.name })
+  .then((genre) => {
       if (genre) {
-        res.json(genre.Genre);
+          res.json(genre.Genre);
       } else {
-        res
-          .status(404)
-          .send("Genre with the name " + req.params.name + " was not found.");
+          res.status(404).send(
+              'Genre with the name ' + req.params.name + ' was not found.');
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+          })
+          .catch((err) => {
+              console.error(err);
+              res.status(500).send('Error: ' + err);
+          });
+}
+);
 
 /**
  * @swagger
  * /cats:
  *   get:
  *     summary: Retrieve a list of all cats
- *     description: Returns a list of all cats with their details from the movies.
+ *     description: Returns a list of all cats.
  *     security:
- *       - bearerAuth: []  // If you are using bearer token authentication
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of cat details
+ *         description: A list of cats
  *         content:
  *           application/json:
  *             schema:
@@ -243,8 +244,6 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
  *                 type: object
  *                 properties:
  *                   Name:
- *                     type: string
- *                   ColorBreed:
  *                     type: string
  *       500:
  *         description: Server error
@@ -257,30 +256,11 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
  */
 app.get("/cats", passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    const movies = await Movies.find(); // Fetch all movies
-    const catDetailsList = movies.map(movie => ({
-      Name: movie.Cat.Name,
-      ColorBreed: movie.Cat.ColorBreed,
-      Bio: movie.Cat.Bio,
-      Movies: movie.Title,
-    }));
-
-   const uniqueCats = {};
-    catDetailsList.forEach(cat => {
-      if (!uniqueCats[cat.Name]) {
-        uniqueCats[cat.Name] = {
-          Name: cat.Name,
-          ColorBreed: cat.ColorBreed,
-          Bio: cat.Bio,
-          Movies: [],
-        };
-      }
-      uniqueCats[cat.Name].Movies.push(cat.Movies); // Add the movie title to the corresponding cat
-    });
-
-    res.json(Object.values(uniqueCats)); // Send the unique list of cat details
+    const cats = await Movies.find({}, "Cat.Name");
+    const catNames = cats.map((movie) => movie.Cat.Name);
+    res.json(catNames);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching cat names:", err);
     res.status(500).send("Error: " + err);
   }
 });
@@ -323,28 +303,29 @@ app.get("/cats", passport.authenticate('jwt', { session: false }), async (req, r
  *       500:
  *         description: Server error.
  */
-app.get("/cats/:name", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.findOne({ "Cat.name": req.params.name }) // Adjusted to search in the Cat object
-    .then((movie) => {
-      if (movie) {
-        const catDetails = {
-          Name: movie.Cat.Name,
-          ColorBreed: movie.Cat.ColorBreed,
-          Bio: movie.Cat.Bio,
+app.get('/cats/:name', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  try {
+    // Find all movies where the cat is featured
+    const movies = await Movies.find({ 'Cat.Name': req.params.name });
+
+    if (movies.length > 0) {
+      // Map through the movies to get necessary details
+      const catDetails = {
+        Name: movies[0].Cat.Name,
+        ColorBreed: movies[0].Cat.ColorBreed,
+        Bio: movies[0].Cat.Bio,
+        Movies: movies.map(movie => ({
           Title: movie.Title,
-          Genre: movie.Genre.Name,
-        };
-        res.json(catDetails);
-      } else {
-        res
-          .status(404)
-          .send("No movie with a cat named " + req.params.name + " was found.");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+        })),
+      };
+      res.json(catDetails); 
+    } else {
+      res.status(404).send('No movies found for a cat named ' + req.params.name + '.');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  }
 });
 
 /**

@@ -154,3 +154,21 @@ Timestamp: Mon Oct 28 2024 17:10:36 GMT+0100 (Central European Standard Time)
 URL: http://localhost:8080/login?Password=sherinas&Username=sherinas
 Timestamp: Mon Oct 28 2024 21:01:13 GMT+0100 (Central European Standard Time)
 
+URL: http://localhost:8080/login?Password=sherinas&Username=sherinas
+Timestamp: Mon Oct 28 2024 23:29:54 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/genres
+Timestamp: Mon Oct 28 2024 23:40:38 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/genres
+Timestamp: Mon Oct 28 2024 23:40:56 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/genres
+Timestamp: Mon Oct 28 2024 23:41:10 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/genres
+Timestamp: Mon Oct 28 2024 23:41:23 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/genres
+Timestamp: Mon Oct 28 2024 23:42:04 GMT+0100 (Central European Standard Time)
+
