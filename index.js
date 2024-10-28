@@ -562,7 +562,7 @@ app.patch("/users/:username",
       // Check if the email already exists and it's different from the current user's email
       if (req.body.Email) {
         const emailExists = await Users.findOne({ Email: req.body.Email });
-        if (emailExists && emailExists.Email !== req.params.Username) {
+        if (emailExists && emailExists.Email !== req.params.Email) {
           console.log("Email already exists:", req.body.Email);
           return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
         }
