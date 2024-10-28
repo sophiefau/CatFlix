@@ -20,19 +20,51 @@ let generateJWTToken = (user) => {
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
-      if (error || !user) {
+      if (error) {
         return res.status(400).json({
-          message: 'Can not login',
-          user: user
+          message: 'Can not login', // General error message for unexpected errors
         });
       }
+
+      if (!user) {
+        // If no user found, return the message from the info object
+        return res.status(400).json({
+          message: info.message || 'Can not login', // Fallback message
+        });
+      }
+
       req.login(user, { session: false }, (error) => {
         if (error) {
-          res.send(error);
+          return res.status(500).send(error);
         }
+        
         let token = generateJWTToken(user); 
         return res.json({ user, token }); // Return user data and the token
       });
     })(req, res);
   });
 }
+
+
+
+
+/* POST login. */
+// module.exports = (router) => {
+//   router.post('/login', (req, res) => {
+//     passport.authenticate('local', { session: false }, (error, user, info) => {
+//       if (error || !user) {
+//         return res.status(400).json({
+//           message: 'Can not login',
+//           user: user
+//         });
+//       }
+//       req.login(user, { session: false }, (error) => {
+//         if (error) {
+//           res.send(error);
+//         }
+//         let token = generateJWTToken(user); 
+//         return res.json({ user, token }); // Return user data and the token
+//       });
+//     })(req, res);
+//   });
+// }
