@@ -226,6 +226,67 @@ app.get("/genres/:name", passport.authenticate('jwt', { session: false }), async
 
 /**
  * @swagger
+ * /cats:
+ *   get:
+ *     summary: Retrieve a list of all cats
+ *     description: Returns a list of all cats with their details from the movies.
+ *     security:
+ *       - bearerAuth: []  // If you are using bearer token authentication
+ *     responses:
+ *       200:
+ *         description: A list of cat details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   Name:
+ *                     type: string
+ *                   ColorBreed:
+ *                     type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *     tags:
+ *       - Cats
+ */
+app.get("/cats", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  try {
+    const movies = await Movies.find(); // Fetch all movies
+    const catDetailsList = movies.map(movie => ({
+      Name: movie.Cat.Name,
+      ColorBreed: movie.Cat.ColorBreed,
+      Bio: movie.Cat.Bio,
+      Movies: movie.Title,
+    }));
+
+   const uniqueCats = {};
+    catDetailsList.forEach(cat => {
+      if (!uniqueCats[cat.Name]) {
+        uniqueCats[cat.Name] = {
+          Name: cat.Name,
+          ColorBreed: cat.ColorBreed,
+          Bio: cat.Bio,
+          Movies: [],
+        };
+      }
+      uniqueCats[cat.Name].Movies.push(cat.Movies); // Add the movie title to the corresponding cat
+    });
+
+    res.json(Object.values(uniqueCats)); // Send the unique list of cat details
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  }
+});
+
+/**
+ * @swagger
  * /cats/{name}:
  *   get:
  *     summary: Get a cat by name
