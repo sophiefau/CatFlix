@@ -553,7 +553,7 @@ app.patch("/users/:username",
       // Check if the username already exists and it's different from the current user's username
       if (req.body.Username) {
         const usernameExists = await Users.findOne({ Username: req.body.Username });
-        if (usernameExists && usernameExists.Username !== req.params.username) {
+        if (usernameExists && usernameExists.Username !== req.params.Username) {
           console.log("Username already taken:", req.body.Username);
           return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
         }
@@ -562,7 +562,7 @@ app.patch("/users/:username",
       // Check if the email already exists and it's different from the current user's email
       if (req.body.Email) {
         const emailExists = await Users.findOne({ Email: req.body.Email });
-        if (emailExists && emailExists.Email !== req.params.username) {
+        if (emailExists && emailExists.Email !== req.params.Username) {
           console.log("Email already exists:", req.body.Email);
           return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
         }
@@ -576,7 +576,7 @@ app.patch("/users/:username",
       if (req.body.Email) updateFields.Email = req.body.Email;
 
       const updatedUser = await Users.findOneAndUpdate(
-        { Username: req.params.username }, // Ensure consistent casing
+        { Username: req.params.Username },
         { $set: updateFields },
         { new: true } // This line makes sure that the updated document is returned
       );
