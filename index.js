@@ -12,6 +12,9 @@ const { swaggerUi, swaggerDocs } = require('./swagger');
 
 const app = express();
 
+// mongoose.connect('mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/CatFlixDB?retryWrites=true&w=majority&appName=SophieFauDB', 
+//   { useNewUrlParser: true, useUnifiedTopology: true });
+
 mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -346,7 +349,7 @@ app.post("/signup",
       return res.status(422).json({ errors: errors.array() });
     }
 
-  let hashedPassword = await Users.hashPassword(req.body.Password);
+  let hashPassword = await Users.hashPassword(req.body.Password);
 
    // Check if the username already exists
    const usernameExists = await Users.findOne({ Username: req.body.Username });
@@ -365,7 +368,7 @@ app.post("/signup",
    try {
     const user = await Users.create({
       Username: req.body.Username,
-      Password: hashedPassword,
+      Password: hashPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     });
@@ -408,7 +411,7 @@ app.post("/signup",
  *         description: Server error.
  */
 app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  if(req.user.Username !== req.params.Username){
+  if(req.user.Username !== req.params.username){
     return res.status(400).send('Permission denied');
   }
   await Users.find()
@@ -550,28 +553,24 @@ app.patch("/users/:username",
     try {
       const updateFields = {};
 
-      // Check if the username already exists and it's different from the current user's username
-      if (req.body.Username) {
-        const usernameExists = await Users.findOne({ Username: req.body.Username });
-        if (usernameExists && usernameExists.Username !== req.params.username) {
-          console.log("Username already taken:", req.body.Username);
-          return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
-        }
-      }
+  //     // Check if the username already exists
+  //  const usernameExists = await Users.findOne({ Username: req.body.Username });
+  //  if (usernameExists) {
+  //   console.log("Username already taken:", req.body.Username);
+  //    return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
+  //  }
 
-      // Check if the email already exists and it's different from the current user's email
-      if (req.body.Email) {
-        const emailExists = await Users.findOne({ Email: req.body.Email });
-        if (emailExists && emailExists.Email !== req.params.Email) {
-          console.log("Email already exists:", req.body.Email);
-          return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
-        }
-      }
-      
+  //  // Check if the email already exists
+  //  const emailExists = await Users.findOne({ Email: req.body.Email });
+  //  if (emailExists) {
+  //   console.log("Email already exists:", req.body.Email);
+  //    return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
+  //  }
+
       // Only include fields that are present in the request body
       if (req.body.Username) updateFields.Username = req.body.Username;
       if (req.body.Password) {
-        updateFields.Password = await hashPassword(req.body.Password);
+        updateFields.Password = await Users.hashPassword(req.body.Password);
       }
       if (req.body.Email) updateFields.Email = req.body.Email;
 
