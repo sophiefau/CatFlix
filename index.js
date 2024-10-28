@@ -12,19 +12,16 @@ const { swaggerUi, swaggerDocs } = require('./swagger');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/CatFlixDB?retryWrites=true&w=majority&appName=SophieFauDB', 
-  { useNewUrlParser: true, useUnifiedTopology: true });
-
-// mongoose.connect( process.env.CONNECTION_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("MongoDB connected successfully!");
-//   })
-//   .catch(err => {
-//     console.error("MongoDB connection error:", err);
-// });
+mongoose.connect( process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully!");
+  })
+  .catch(err => {
+    console.error("MongoDB connection error:", err);
+});
 
 // Parse incoming request (POST)
 app.use(express.json());
