@@ -142,3 +142,12 @@ Timestamp: Mon Oct 28 2024 13:52:54 GMT+0100 (Central European Standard Time)
 URL: http://localhost:8080/signup
 Timestamp: Mon Oct 28 2024 13:53:17 GMT+0100 (Central European Standard Time)
 
+URL: http://localhost:8080/movies
+Timestamp: Mon Oct 28 2024 17:09:36 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/cats
+Timestamp: Mon Oct 28 2024 17:09:46 GMT+0100 (Central European Standard Time)
+
+URL: http://localhost:8080/sherinas
+Timestamp: Mon Oct 28 2024 17:10:36 GMT+0100 (Central European Standard Time)
+

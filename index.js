@@ -12,19 +12,19 @@ const { swaggerUi, swaggerDocs } = require('./swagger');
 
 const app = express();
 
-// mongoose.connect('mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/CatFlixDB?retryWrites=true&w=majority&appName=SophieFauDB', 
-//   { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://sophiefauquembergue:WebDesign2024@sophiefaudb.gz2er.mongodb.net/CatFlixDB?retryWrites=true&w=majority&appName=SophieFauDB', 
+  { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect( process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MongoDB connected successfully!");
-  })
-  .catch(err => {
-    console.error("MongoDB connection error:", err);
-});
+// mongoose.connect( process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("MongoDB connected successfully!");
+//   })
+//   .catch(err => {
+//     console.error("MongoDB connection error:", err);
+// });
 
 // Parse incoming request (POST)
 app.use(express.json());
@@ -553,26 +553,28 @@ app.patch("/users/:username",
     try {
       const updateFields = {};
 
-  //     // Check if the username already exists
-  //  const usernameExists = await Users.findOne({ Username: req.body.Username });
-  //  if (usernameExists) {
-  //   console.log("Username already taken:", req.body.Username);
-  //    return res.status(400).json({ errors: [{ param: "Username", msg: "Username already exists" }] });
-  //  }
+        // Check if the new username is already in use
+          if (req.body.Username) {
+            const existingUser = await Users.findOne({ Username: req.body.Username });
+            if (existingUser) {
+              return res.status(400).json({ message: "Username is already in use." });
+            }
+            updateFields.Username = req.body.Username;
+          }
 
-  //  // Check if the email already exists
-  //  const emailExists = await Users.findOne({ Email: req.body.Email });
-  //  if (emailExists) {
-  //   console.log("Email already exists:", req.body.Email);
-  //    return res.status(400).json({ errors: [{ param: "Email", msg: "Email already exists" }] });
-  //  }
+      // Check if the new email is already in use
+      if (req.body.Email) {
+        const existingUserByEmail = await Users.findOne({ Email: req.body.Email });
+        if (existingUserByEmail) {
+          return res.status(400).json({ message: "Email is already in use." });
+        }
+        updateFields.Email = req.body.Email;
+      }
 
-      // Only include fields that are present in the request body
-      if (req.body.Username) updateFields.Username = req.body.Username;
+      // Hash password if it's being updated
       if (req.body.Password) {
         updateFields.Password = await Users.hashPassword(req.body.Password);
       }
-      if (req.body.Email) updateFields.Email = req.body.Email;
 
       const updatedUser = await Users.findOneAndUpdate(
         { Username: req.params.username },
