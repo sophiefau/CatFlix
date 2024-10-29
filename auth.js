@@ -1,20 +1,20 @@
-const jwtSecret = 'your_jwt_secret'; // This has to be the same key used in the JWTStrategy
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
+const jwtSecret = "your_jwt_secret"; // This has to be the same key used in the JWTStrategy
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
-require('./passport'); // Your local passport file
+require("./passport"); // Your local passport file
 
 let generateJWTToken = (user) => {
   return jwt.sign(
-    { _id: user._id },  // Only include user ID in the payload
+    { _id: user._id }, // Only include user ID in the payload
     jwtSecret,
     {
-    subject: user.Username, // This is the username you’re encoding in the JWT
-    expiresIn: '7d', // This specifies that the token will expire in 7 days
-    algorithm: 'HS256' // This is the algorithm used to “sign” or encode the values of the JWT
-  });
-}
-
+      subject: user.Username, // This is the username you’re encoding in the JWT
+      expiresIn: "7d", // This specifies that the token will expire in 7 days
+      algorithm: "HS256", // This is the algorithm used to “sign” or encode the values of the JWT
+    }
+  );
+};
 
 /**
  * @swagger
@@ -76,20 +76,22 @@ let generateJWTToken = (user) => {
  *                 message:
  *                   type: string
  *                   description: Error message indicating the server error.
+ *   tags:
+ *       - General
  */
 module.exports = (router) => {
-  router.post('/login', (req, res) => {
-    passport.authenticate('local', { session: false }, (error, user, info) => {
+  router.post("/login", (req, res) => {
+    passport.authenticate("local", { session: false }, (error, user, info) => {
       if (error) {
         return res.status(400).json({
-          message: 'Can not login', // General error message for unexpected errors
+          message: "Can not login", // General error message for unexpected errors
         });
       }
 
       if (!user) {
         // If no user found, return the message from the info object
         return res.status(400).json({
-          message: info.message || 'Can not login', // Fallback message
+          message: info.message || "Can not login", // Fallback message
         });
       }
 
@@ -97,10 +99,10 @@ module.exports = (router) => {
         if (error) {
           return res.status(500).send(error);
         }
-        
-        let token = generateJWTToken(user); 
+
+        let token = generateJWTToken(user);
         return res.json({ user, token }); // Return user data and the token
       });
     })(req, res);
   });
-}
+};
