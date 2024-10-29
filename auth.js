@@ -16,7 +16,67 @@ let generateJWTToken = (user) => {
 }
 
 
-/* POST login. */
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: User login
+ *     description: Authenticates a user and returns user data along with a JWT token. If the login fails, it provides appropriate error messages.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username of the user trying to log in.
+ *                 example: user123
+ *               password:
+ *                 type: string
+ *                 description: The password of the user.
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Successful login, returns user data and token.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     username:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     // Include any other user properties you want to return
+ *                 token:
+ *                   type: string
+ *                   description: The JWT token for the authenticated user.
+ *       400:
+ *         description: Invalid username/password or other error messages.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message detailing the reason for the failure.
+ *       500:
+ *         description: Unexpected error during the login process.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating the server error.
+ */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
@@ -44,27 +104,3 @@ module.exports = (router) => {
     })(req, res);
   });
 }
-
-
-
-
-/* POST login. */
-// module.exports = (router) => {
-//   router.post('/login', (req, res) => {
-//     passport.authenticate('local', { session: false }, (error, user, info) => {
-//       if (error || !user) {
-//         return res.status(400).json({
-//           message: 'Can not login',
-//           user: user
-//         });
-//       }
-//       req.login(user, { session: false }, (error) => {
-//         if (error) {
-//           res.send(error);
-//         }
-//         let token = generateJWTToken(user); 
-//         return res.json({ user, token }); // Return user data and the token
-//       });
-//     })(req, res);
-//   });
-// }

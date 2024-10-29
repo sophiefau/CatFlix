@@ -18,7 +18,7 @@ const swaggerOptions = {
           url: 'https://catflix-99a985e6fffa.herokuapp.com',
         },
       ],
-    apis: ['./index.js'],
+    apis: ['./routes/*.js'],
 };
 
 // Initialize swagger-jsdoc
