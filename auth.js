@@ -1,6 +1,7 @@
 const jwtSecret = "your_jwt_secret"; // This has to be the same key used in the JWTStrategy
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const { swaggerUi, swaggerDocs } = require("./swagger");
 
 require("./passport"); // Your local passport file
 
