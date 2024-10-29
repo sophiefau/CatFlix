@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
 // Allow origins
-let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com'];
+let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 'https://catflix-99a985e6fffa.herokuapp.com', 'https://catflixmovies.netlify.app'];
 
 app.use(cors({
   origin: (origin, callback) => {
