@@ -18,10 +18,16 @@ const swaggerOptions = {
           url: 'https://catflix-99a985e6fffa.herokuapp.com',
         },
       ],
-    apis: ['./movie_api/*.js'],
+};
+
+// Options for the swagger docs
+const options = {
+  swaggerDefinition,
+  apis: ['./movie_api/*.js'], 
 };
 
 // Initialize swagger-jsdoc
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-module.exports = { swaggerUi, swaggerDocs };
+// Serve swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
