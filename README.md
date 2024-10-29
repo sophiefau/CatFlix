@@ -27,18 +27,18 @@ Essential features of the CatFlix app include:
 
 # API Endpoints
 
-- **GET** /movies: Retrieves all movies.
-- **GET** /movies/:id: Retrieves detailed information for a single movie.
-- **GET** /cats: Retrieves all cats.
-- **GET** /cats/name: Retrieves detailed information for a single cat.
-- **POST** /signup: Registers a new user.
-- **POST** /login: Authenticates a user.
-- **PUT** /users/:username: Updates user profile data.
-- **POST** /users/:username/:movieId: Adds a movie to user favorites.
-- **DELETE** /users/:username/:movieId: Removes a movie from user favorites.
-- **DELETE** /users/:username: Delete the user account.
+- **GET** /movies → Retrieves all movies.
+- **GET** /movies/:id → Retrieves detailed information for a single movie.
+- **GET** /cats → Retrieves all cats.
+- **GET** /cats/name → Retrieves detailed information for a single cat.
+- **POST** /signup → Registers a new user.
+- **POST** /login → Authenticates a user.
+- **PUT** /users/:username → Updates user profile data.
+- **POST** /users/:username/:movieId → Adds a movie to user favorites.
+- **DELETE** /users/:username/:movieId → Removes a movie from user favorites.
+- **DELETE** /users/:username → Delete the user account.
 
-You can access to the documentation wvia Swagger: [API Documentation](https://catflix-99a985e6fffa.herokuapp.com/)api-docs/
+You can access to the documentation wvia Swagger: [API Documentation](https://catflix-99a985e6fffa.herokuapp.com/api-docs/)
 
 ### Deployment
 - This application is deployed on [Netlify](https://catflixmovies.netlify.app) for the frontend client app (check repository [CatFlix-client](https://github.com/sophiefau/CatFlix-client) ) and [Heroku](https://catflix-99a985e6fffa.herokuapp.com/) for the backend API.
