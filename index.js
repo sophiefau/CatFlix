@@ -107,8 +107,6 @@ app.get("/", (req, res) => {
  *                     type: string
  *       500:
  *         description: Server error.
- *    tags:
- *       - Movies
  */
 app.get(
   "/movies",
@@ -158,8 +156,6 @@ app.get(
  *         description: Movie not found.
  *       500:
  *         description: Server error.
- *  tags:
- *       - Movies
  */
 app.get(
   "/movies/:movieId",
@@ -233,8 +229,6 @@ app.get(
  *         description: Genre not found.
  *       500:
  *         description: Server error.
- * tags:
- *       - Movies
  */
 app.get(
   "/genres/:name",
@@ -283,8 +277,6 @@ app.get(
  *           application/json:
  *             schema:
  *               type: string
- *     tags:
- *       - Cats
  */
 app.get(
   "/cats",
@@ -338,8 +330,6 @@ app.get(
  *         description: No movie with a cat of the specified name found.
  *       500:
  *         description: Server error.
- *  tags:
- *       - Cats
  */
 app.get(
   "/cats/:name",
@@ -418,8 +408,6 @@ app.get(
  *         description: Validation errors.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.post(
   "/signup",
@@ -514,8 +502,6 @@ app.post(
  *         description: Permission denied. Only the user can access their own information.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.get(
   "/users",
@@ -571,8 +557,6 @@ app.get(
  *         description: User not found with the specified username.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.get(
   "/users/:username",
@@ -659,8 +643,6 @@ app.get(
  *         description: User not found with the specified username.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.patch(
   "/users/:username",
@@ -780,8 +762,6 @@ app.patch(
  *         description: User not found.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.post(
   "/users/:username/:movieId",
@@ -849,8 +829,6 @@ app.post(
  *         description: User not found or movie not found in favorites.
  *       500:
  *         description: Server error.
- *  tags:
- *       - User
  */
 app.delete(
   "/users/:username/:movieId",
@@ -903,8 +881,6 @@ app.delete(
  *         description: Permission denied due to username mismatch or user not found.
  *       500:
  *         description: Server error.
- * tags:
- *       - User
  */
 app.delete(
   "/users/:username",
