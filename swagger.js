@@ -23,7 +23,7 @@ const swaggerOptions = {
 // Options for the swagger docs
 const options = {
   swaggerDefinition,
-  apis: ['./movie_api/*.js'], 
+  apis: ['./*.js'], 
 };
 
 // Initialize swagger-jsdoc
