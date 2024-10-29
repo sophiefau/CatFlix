@@ -77,7 +77,7 @@ let generateJWTToken = (user) => {
  *                   type: string
  *                   description: Error message indicating the server error.
  *   tags:
- *       - General
+ *       - User
  */
 module.exports = (router) => {
   router.post("/login", (req, res) => {

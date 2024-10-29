@@ -9,6 +9,20 @@ const swaggerOptions = {
             version: '1.0.0',
             description: 'API documentation for CatFlix, an app featuring movies with cats!'
         },
+        tags: [
+          {
+            name: 'Movies',
+            description: 'Operations related to movies',
+          },
+          {
+            name: 'Cats',
+            description: 'Operations related to cats',
+          },
+          {
+            name: 'Users',
+            description: 'Operations related to users',
+          },
+        ],
       },
       servers: [
         {

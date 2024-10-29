@@ -76,8 +76,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *           text/plain:
  *             schema:
  *               type: string
- *  tags:
- *       - General
  */
 app.get("/", (req, res) => {
   res.send("Welcome to CatFlix, an app showcasing movies with cats!");
