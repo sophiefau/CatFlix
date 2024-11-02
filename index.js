@@ -337,7 +337,18 @@ app.get(
   async (req, res) => {
     try {
       // Find all movies where the cat is featured
-      const movies = await Movies.find({ "Cat.Name": req.params.name });
+      // const movies = await Movies.find({ "Cat.Name": req.params.name });
+
+      const catMovies = { "Cat.Name": req.params.name }; // Base query for cat name
+      let movies;
+
+      // If a movie ID is provided, add it to the base query
+      if (req.query.movieId) {
+        catMovies._id = req.query.movieId; // Add movie ID condition
+      }
+
+      // Find movies based on the constructed query
+      movies = await Movies.find(catMovies);
 
       if (movies.length > 0) {
         // Map through the movies to get necessary details
@@ -347,6 +358,7 @@ app.get(
           Bio: movies[0].Cat.Bio,
           Movies: movies.map((movie) => ({
             Title: movie.Title,
+            MovieId: movie._id
           })),
         };
         res.json(catDetails);
