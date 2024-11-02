@@ -347,7 +347,8 @@ app.get(
           Bio: movies[0].Cat.Bio,
           Movies: movies.map((movie) => ({
             Title: movie.Title,
-            id: movie._id
+            id: movie._id,
+            Img: movie.Img
           })),
         };
         res.json(catDetails);
