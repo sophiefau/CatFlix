@@ -348,7 +348,7 @@ app.get(
           Movies: movies.map((movie) => ({
             Title: movie.Title,
             id: movie._id,
-            Img: movie.Imgcd
+            Img: movie.Img
           })),
         };
         res.json(catDetails);
