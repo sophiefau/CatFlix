@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 let movieSchema = new Schema({
   Title: { type: String, required: true },
-  ImgPath: String,
+  Img: String,
   Director: String,
   Cat: {
     Name: String,
