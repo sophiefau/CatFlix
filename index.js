@@ -345,6 +345,7 @@ app.get(
           Name: movies[0].Cat.Name,
           ColorBreed: movies[0].Cat.ColorBreed,
           Bio: movies[0].Cat.Bio,
+          Img: movies[0].Cat.Img,
           Movies: movies.map((movie) => ({
             Title: movie.Title,
             id: movie._id,
