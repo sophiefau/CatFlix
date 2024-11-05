@@ -283,14 +283,11 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const cats = await Movies.find({}, "Cat.Name Cat.Img");
-      const catData = cats.map((movie) => ({
-        name: movie.Cat.Name,
-        img: movie.Cat.Img,
-      }));
+      const cats = await Movies.find({}, "Cat");
+      const catData = cats.map((movie) => movie.Cat); 
       res.json(catData);
     } catch (err) {
-      console.error("Error fetching cats:", err);
+      console.error("Error fetching cat names:", err);
       res.status(500).send("Error: " + err);
     }
   }
