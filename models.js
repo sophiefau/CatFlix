@@ -9,6 +9,7 @@ let movieSchema = new Schema({
     Name: String,
     ColorBreed: String,
     Bio: String,
+    Img: String,
   },
   Genre: {
     Name: String,
@@ -16,6 +17,7 @@ let movieSchema = new Schema({
   },
   Animation: Boolean,
   Year: String,
+  Country: String,
   Synopsis: { type: String, required: true },
 });
 
