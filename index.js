@@ -33,6 +33,7 @@ app.use(morgan("common"));
 let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:8080",
+  "http://localhost:4200",
   "https://catflix-99a985e6fffa.herokuapp.com",
   "https://catflixmovies.netlify.app",
 ];
